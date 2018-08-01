@@ -1,0 +1,7 @@
+- name: Cleanup all Splunk apps permissions and rubish files
+  hosts: all
+  remote_user: ec2-user
+  become: yes
+
+  roles:
+    - cleanup

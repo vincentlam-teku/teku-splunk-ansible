@@ -1,0 +1,7 @@
+- name: Install and configure the index cluster master
+  hosts: master
+  remote_user: jansett
+  become: yes
+
+  roles:
+    - master

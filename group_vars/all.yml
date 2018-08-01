@@ -1,0 +1,33 @@
+---
+# MANDATORY - MUST BE CORRECT FOR DEPLOYMENT #
+# MANDATORY - MUST BE CORRECT FOR DEPLOYMENT #
+# MANDATORY - MUST BE CORRECT FOR DEPLOYMENT #
+
+deploypackages: /root
+wget_url: https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=7.0.1&product=splunk&filename=splunk-7.0.1-2b5b15c4ee89-linux-2.6-x86_64.rpm&wget=true
+enterprise: splunk-7.0.1-2b5b15c4ee89-linux-2.6-x86_64.rpm
+base_configs: Configurations-Base.tgz
+org: smbmi
+label: smbmi
+master_internal_ip: 10.232.216.46
+deployer_internal_ip: 10.232.216.46
+shcluster_label: smbmi_shcluster
+shcluster_secret: password123
+idxcluster_secret: password123
+
+#To be depreciated
+discoverysecret: password123
+
+# Fixed Values
+peermode: slave
+membermode: searchhead
+
+# Optional Values
+ntpserver: pool.ntp.org
+idx_rep_port: 9887
+shc_rep_port: 8181
+
+# Not yet implemented
+splkuser: admin
+splkpass: changeme
+idxdiscovery_secret: password123

@@ -1,0 +1,7 @@
+- name: Install and configure the Search Head (non-clustered)
+  hosts: search
+  remote_user: jansett
+  become: yes
+
+  roles:
+    - search

@@ -1,0 +1,38 @@
+---
+# This playbook contains common plays that will be run on all nodes.
+#
+- name: Set open files limit for splunk
+  copy: src=20-nofile.conf dest=/etc/security/limits.d/ owner=root group=root mode=0644
+
+- name: Set max processes limit
+  copy: src=20-nproc.conf dest=/etc/security/limits.d/ owner=root group=root mode=0644
+
+- name: Set core file size
+  copy: src=20-core.conf dest=/etc/security/limits.d/ owner=root group=root mode=0644
+
+- name: Copy Disable THP File
+  copy: src=disable-thp dest=/etc/init.d/ owner=root group=root mode=0755
+
+- name: Disable THP
+  shell: chkconfig --add disable-thp
+
+- name: Download Splunk
+  get_url: url={{ wget_url }} dest=/var/tmp/ owner=root group=root mode=0644
+
+- name: Install Splunk Enterprise package
+  yum:
+    name: /var/tmp/{{ enterprise }}
+    state: installed
+
+- name: Configure boot-start with splunk user
+  shell: /opt/splunk/bin/splunk enable boot-start -user splunk --accept-license
+
+- name: Start Splunk
+  shell: /opt/splunk/bin/splunk start
+  become: yes
+  become_user: splunk
+
+- name: Reset admin password
+  shell: /opt/splunk/bin/splunk edit user admin -password SPLKp@ss! -role admin -auth admin:changeme
+  become: yes
+  become_user: splunk

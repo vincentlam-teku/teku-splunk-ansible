@@ -1,0 +1,7 @@
+- name: Configure OS and install Splunk
+  hosts: all
+  remote_user: jansett
+  become: yes
+
+  roles:
+    - common
