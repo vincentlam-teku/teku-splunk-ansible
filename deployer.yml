@@ -1,0 +1,8 @@
+- name: Install and configure the search head deployer
+  hosts: deployer
+  remote_user: centos
+  become: yes
+
+  roles:
+    - common
+    - deployer

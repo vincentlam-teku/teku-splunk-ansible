@@ -1,8 +1,0 @@
-- name: Install and configure the site 1 index cluster
-  hosts: site1-indexer
-  remote_user: ec2-user
-  become: yes
-
-  roles:
-    - common
-    - site1-indexer
