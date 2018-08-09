@@ -1,2 +1,39 @@
-[common]
-127.0.0.0.1
+#===========INVENTORY===========
+# Here you would define each host and their catergory for deployment
+
+# servers that are meant to be splunk search heads, will also have the common config applied.
+#
+[search]
+
+# servers that are meant to be indexers, will also have the common config applied.
+#
+[indexer]
+
+# servers that are meant to be license masters, will also have the common config applied.
+[license]
+
+# servers that are meant to be cluster masters, will also have the common config applied.
+#
+[master]
+
+# servers that are meant to be splunk splunk monitoring consoles, will also have the common config applied
+#
+[monitor]
+
+# servers that are meant to be splunk deployment servers, will also have the common config applied
+#
+[deployment]
+
+# servers that are meant to be splunk search head deployers, will also have the common config applied
+#
+[deployer]
+
+# servers that are meant to be splunk heavy forwarders, will also have the common config applied
+#
+[forwarder_heavy]
+
+# servers that are meant to be splunk universal forwarders, will also have the common config applied
+[forwarder_uni]
+
+
+
