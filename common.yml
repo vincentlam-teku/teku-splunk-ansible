@@ -1,4 +1,5 @@
 - name: Configure OS and install Splunk
+  description: Common Configuration and settings for all Splunk Enterprise Deployments - except for Splunk Forwarder
   hosts: all
   remote_user: centos
   become: yes

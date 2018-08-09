@@ -1,5 +1,6 @@
 - name: Install and configure heavy forwarder
-  hosts: forwarder
+  hosts: forwarder_heavy
+  description: A type of forwarder, which is a Splunk Enterprise instance that sends data to another Splunk Enterprise instance or to a third-party system.A heavy forwarder has a smaller footprint than a Splunk Enterprise indexer but retains most of the capabilities of an indexer. An exception is that it cannot perform distributed searches. You can disable some services, such as Splunk Web, to further reduce its footprint size. Unlike other forwarder types, a heavy forwarder parses data before forwarding it and can route data based on criteria such as source or type of event. It can also index data locally while forwarding the data to another indexer. In most situations, the universal forwarder is the best way to forward data to indexers. Its main limitation is that it forwards only unparsed data. You must use a heavy forwarder to route data based on event contents.
   remote_user: centos
   become: yes
 

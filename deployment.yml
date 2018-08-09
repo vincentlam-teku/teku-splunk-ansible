@@ -1,5 +1,6 @@
 - name: Install and configure the deployment server
   hosts: deployment
+  description: A Splunk Enterprise instance that acts as a centralized configuration manager, grouping together and collectively managing any number of Splunk Enterprise instances. Instances that are remotely configured by deployment servers are called deployment clients. The deployment server downloads updated content, such as configuration files and apps, to deployment clients. Units of such content are known as deployment apps. 
   remote_user: centos
   become: yes
 
