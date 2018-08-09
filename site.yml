@@ -1,6 +1,8 @@
 #Configure Desired Hosts for Deployment and link to related dependencies below:
 
 #Search Head Cluster
+- import_playbook:
 
 #Indexer Clusters
+- import_playbook:
 

@@ -17,15 +17,15 @@
   shell: chkconfig --add disable-thp
 
 - name: Download Splunk
-  get_url: url={{ wget_url }} dest=/var/tmp/ owner=root group=root mode=0644
+  get_url: url={{wget_url_splunk_enterprise}} dest=/var/tmp/ owner=root group=root mode=0644
 
 - name: Install Splunk Enterprise package
   yum:
-    name: /var/tmp/{{ enterprise }}
+    name: /var/tmp/{{splunk_enterprise}}
     state: installed
 
 - name: Configure boot-start with splunk user
-  shell: /opt/splunk/bin/splunk enable boot-start -user splunk --accept-license
+  shell: /opt/splunk/bin/.splunk enable boot-start -user splunk --accept-license
 
 - name: Start Splunk
   shell: /opt/splunk/bin/splunk start
@@ -33,6 +33,6 @@
   become_user: splunk
 
 - name: Reset admin password
-  shell: /opt/splunk/bin/splunk edit user admin -password SPLKp@ss! -role admin -auth admin:changeme
+  shell: /opt/splunk/bin/splunk edit user admin -password D4yDr34m$ -role admin -auth admin:changeme
   become: yes
   become_user: splunk

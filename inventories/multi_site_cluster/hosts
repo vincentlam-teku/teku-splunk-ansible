@@ -3,18 +3,18 @@
 
 # servers that are meant to be splunk search heads, will also have the common config applied.
 #
-[search_head]
+[search]
 
 # servers that are meant to be indexers, will also have the common config applied.
 #
 [indexer]
 
 # servers that are meant to be license masters, will also have the common config applied.
-[license_master]
+[license]
 
 # servers that are meant to be cluster masters, will also have the common config applied.
 #
-[cluster_master]
+[master]
 
 # servers that are meant to be splunk splunk monitoring consoles, will also have the common config applied
 #
@@ -30,10 +30,10 @@
 
 # servers that are meant to be splunk heavy forwarders, will also have the common config applied
 #
-[heavy_forwarder]
+[forwarder_heavy]
 
 # servers that are meant to be splunk universal forwarders, will also have the common config applied
-[universal_forwarder]
+[forwarder_uni]
 
 
 

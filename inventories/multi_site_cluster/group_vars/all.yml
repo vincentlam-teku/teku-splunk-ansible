@@ -61,9 +61,6 @@ forwarder_heavy_external_ip:
 forwarder_universal_internal_ip: 
 forwarder_universal_internal_ip: 
 
-
-
-
 shcluster_label: teku_shcluster
 shcluster_secret: password123
 idxcluster_secret: password123
