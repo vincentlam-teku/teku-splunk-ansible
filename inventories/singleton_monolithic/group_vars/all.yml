@@ -1,0 +1,60 @@
+---
+# MANDATORY - MUST BE CORRECT FOR DEPLOYMENT #
+# MANDATORY - MUST BE CORRECT FOR DEPLOYMENT #
+# MANDATORY - MUST BE CORRECT FOR DEPLOYMENT #
+
+deploypackages: /root
+wget_url_splunk_enterprise: https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=7.1.2&product=splunk&filename=splunk-7.1.2-a0c72a66db66-Linux-x86_64.tgz&wget=true
+wget_url_splunk_forwarder: https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=7.1.2&product=universalforwarder&filename=splunkforwarder-7.1.2-a0c72a66db66-Linux-x86_64.tgz&wget=true 
+
+splunk_enterprise: splunk-7.1.2-a0c72a66db66-Linux-x86_64.tgz
+splunk_forwarder: splunkforwarder-7.1.2-a0c72a66db66-Linux-x86_64.tgz 
+
+org: teku
+label: teku
+
+
+#Declare Deployment Hosts 
+#Comment out to make deployment
+
+#Indexer
+indexer_internal_ip:
+indexer_external_ip: 
+
+#Search_Head
+serch_head_internal_ip:
+search_head_external_ip:
+ 
+#Licenser
+licenser_internal_ip: 
+licenser_external_ip: 
+
+#Console
+console_internal_ip:
+console_external_ip: 
+
+#Master
+#master_internal_ip:
+#master_external_ip: 
+
+#Deployer 
+#deployer_internal_ip:
+#deployer_external_ip: 
+
+#Deployment
+#deployment_internal_ip: 
+#deployment_external_ip: 
+
+#Forwarder-Heavy
+#forwarder_heavy_internal_ip: 
+#forwarder_heavy_external_ip: 
+
+#Forwarder-Universal
+#forwarder_universal_internal_ip: 
+#forwarder_universal_internal_ip: 
+
+
+# Default Splunk User Name and Password at Install Time
+splkuser: admin
+splkpass: changeme
+
