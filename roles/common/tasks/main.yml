@@ -13,8 +13,23 @@
 - name: Copy Disable THP File
   copy: src=disable-thp dest=/etc/init.d/ owner=root group=root mode=0755
 
-- name: Disable THP
+- name: Disable Transparent Huge Page
   shell: chkconfig --add disable-thp
+
+- name: Create Splunk Group
+  group:
+    name: "{{ splunk_group }}"
+    gid: "{{ splunk_gid }}"
+    state: present
+  tags: splunk_user
+
+- name: Create Splunk User
+  user:
+    name: "{{ splunk_user }}"
+    group: "{{ splunk_group }}"
+    uid: "{{ splunk_uid }}"
+    state: present
+  tags: splunk_user
 
 - name: Download Splunk
   get_url: url={{wget_url_splunk_enterprise}} dest=/var/tmp/ owner=root group=root mode=0644
