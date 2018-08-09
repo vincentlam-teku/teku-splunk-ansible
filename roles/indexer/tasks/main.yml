@@ -4,10 +4,10 @@
 # please contact Teku Professional Services @ www.tekugroup.net
 
 - name: Copy base configs
-  unarchive: src={{ deploypackages }}{{ base_configs }} dest=/var/tmp owner=splunk group=splunk mode=0755
+  shell:
 
 - name: Copy idx role configs to app path
-  shell: cp -a "/var/tmp/Configurations-Base/{{ org }}_idx_base" /opt/splunk/etc/apps/
+  shell: 
 
 - name: Restart Splunk
   shell: /opt/splunk/bin/splunk restart
