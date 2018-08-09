@@ -1,8 +1,8 @@
 - name: Install and configure the monitoring console
-  hosts: deployment
-  remote_user: ec2-user
+  hosts: monitor
+  remote_user: centos
   become: yes
 
   roles:
     - common
-    - deployment
+    - monitor
