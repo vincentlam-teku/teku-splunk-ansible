@@ -1,0 +1,15 @@
+---
+# This playbook contains the tasks to reset instance and remove all traces of former setup.
+
+- name: Delete Splunk User
+  command: sudo userdel -f splunk 
+  ignore_errors: yes  
+
+- name: Delete Splunk Installation Binary
+  command: sudo rm -rf /opt/{{splunk_enterprise}}
+  ignore_errors: yes  
+
+- name: Delete Splunk Files 
+  command: sudo rm -rf /opt/splunk
+  ignore_errors: yes
+

@@ -16,13 +16,17 @@
 - hosts: indexers
 
   roles:
-   - common 
+   - indexer
 
 #Configure Forwarders 
-- hosts: forwarders
+- hosts: forwarder_heavy
 
   roles:
-   - forwarder_heavyi
+   - forwarder_heavy
+
+- hosts: forwarder_uni
+
+  roles:
    - forwarder_uni
 
 

@@ -22,20 +22,27 @@
 - name: Install Splunk Enterprise package
   command: tar -xvzf /opt/{{splunk_enterprise}} -C /opt 
 
-- name: Add Splunk User   
+- name: Add Splunk Service User   
   command: sudo useradd -m -r splunk 
 
-- name: Assign Password to Splunk User
+- name: Assign Password to Splunk Service User
   command: echo 'password' | sudo passwd splunk --stdin 
 
 - name: Assign /opt/splunk to Splunk Service User
   command: sudo chown -R splunk:splunk /opt/splunk 
 
-- name: Configure boot-start with splunk user
-  shell: /opt/splunk/bin/splunk enable boot-start -user splunk --accept-license --answer-yes
+- name: Copy Deployment Client Configs from 
+  copy: src=user-seed.conf dest=/opt/splunk/etc/system/local/ owner=splunk group=splunk mode=0755
+
+- name: Configure boot-start with Splunk user and generate admin user and password
+  shell: /opt/splunk/bin/splunk enable boot-start -user splunk --accept-license --answer-yes --no-prompt
 
 - name: Start Splunk
   shell: /opt/splunk/bin/splunk restart
   become: yes
   become_user: splunk
+
+- name: Copy Deployment Client Configs from 
+  copy: src=deploymentclient.conf dest=/opt/splunk/etc/system/local/ owner=splunk group=splunk mode=0755
+
 

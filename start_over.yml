@@ -1,0 +1,7 @@
+- name: Uninstall Splunk Enterprise, Delete Install Binary, and Delete Splunk Service User
+  hosts: all
+  remote_user: centos
+  become: yes
+
+  roles:
+    - start_over

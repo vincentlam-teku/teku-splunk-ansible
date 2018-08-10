@@ -44,17 +44,18 @@ label: teku
 #search_head_2_external_ip:
  
 #UTILITIES
-#Licenser
-#licenser_internal_ip: 
-#licenser_external_ip: 
+
+#Master
+#master_internal_ip: 
+#master_external_ip: 
 
 #Console
 #console_internal_ip: 
 #console_external_ip: 
 
-#Master
-#master_internal_ip: 
-#master_external_ip: 
+#Licenser
+#licenser_internal_ip: 
+#licenser_external_ip: 
 
 #Deployer 
 #deployer_internal_ip: 
@@ -79,8 +80,6 @@ label: teku
 shcluster_label: teku_shcluster
 shcluster_secret: password123
 idxcluster_secret: password123
-
-#To be depreciated
 discoverysecret: password123
 
 # Fixed Values

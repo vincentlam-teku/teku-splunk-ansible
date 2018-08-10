@@ -35,6 +35,5 @@
 # servers that are meant to be splunk universal forwarders, will also have the common config applied
 #
 [forwarder_uni]
-127.0.0.1
-
+54.153.123.196
 
