@@ -27,7 +27,7 @@
 # servers that are meant to be splunk search head deployers, will also have the common config applied
 #
 [deployer]
-127.0.0.1
+#127.0.0.1
 # servers that are meant to be splunk heavy forwarders, will also have the common config applied
 #
 [forwarder_heavy]
@@ -35,6 +35,6 @@
 # servers that are meant to be splunk universal forwarders, will also have the common config applied
 #
 [forwarder_uni]
-
+127.0.0.1
 
 

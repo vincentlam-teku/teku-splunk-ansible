@@ -1,48 +1,26 @@
 ---
-# This playbook contains common plays that will be run on all nodes.
+# This playbook contains common plays that will be run on forwarder nodes.
 #
-- name: Set open files limit for splunk
-  copy: src=20-nofile.conf dest=/etc/security/limits.d/ owner=root group=root mode=0644
+- name: Download Splunk Forwader
+  get_url: url={{wget_url_splunk_forwarder}} dest=/opt/ owner=root group=root mode=0755
 
-- name: Set max processes limit
-  copy: src=20-nproc.conf dest=/etc/security/limits.d/ owner=root group=root mode=0644
+- name: Install Splunk Forwarder package
+  command: tar -xvzf /opt/{{splunk_forwarder}} -C /opt 
 
-- name: Set core file size
-  copy: src=20-core.conf dest=/etc/security/limits.d/ owner=root group=root mode=0644
+- name: Add Splunk User   
+  command: sudo useradd -m -r splunk 
 
-- name: Copy Disable THP File
-  copy: src=disable-thp dest=/etc/init.d/ owner=root group=root mode=0755
+- name: Assign Password to Splunk User
+  command: echo 'password' | sudo passwd splunk --stdin 
 
-- name: Disable THP
-  shell: chkconfig --add disable-thp
-
-- name: Create Splunk group
-  group:
-    name: "{{ splunk_forwarder_group }}"
-    gid: "{{ splunk_forwarder_gid }}"
-    state: present
-  tags: splunk_user
-
-- name: Create Splunk user
-  user:
-    name: "{{ splunk_forwarder_user }}"
-    group: "{{ splunk_forwarder_group }}"
-    uid: "{{ splunk_forwarder_uid }}"
-    state: present
-  tags: splunk_user
-
-- name: Download Splunk Forwarder RPM
-  get_url: url={{ wget_url_splunk_forwarder }} dest=/var/tmp/ owner=root group=root mode=0644
-  
-- name: Install Splunk Forwarder RPM
-  yum:
-    name: /var/tmp/{{ splunk_forwarder }}
-    state: installed
+- name: Assign /opt/splunk to Splunk Service User
+  command: sudo chown -R splunk:splunk /opt/splunkforwarder 
 
 - name: Configure boot-start with splunk user
-  shell: /opt/splunkforwarder/bin/splunk enable boot-start --accept-license
+  shell: /opt/splunkforwarder/bin/splunk enable boot-start -user splunk --accept-license --answer-yes
 
-- name: Start Splunk Forwarder
-  shell: /opt/splunkforwarder/bin/splunk start
+- name: Start Splunk
+  shell: /opt/splunkforwarder/bin/splunk restart
   become: yes
   become_user: splunk
+
