@@ -1,8 +1,28 @@
 #Configure Desired Hosts for Deployment and link to related dependencies below:
 
-#Search Head Cluster
-- import_playbook:
+#Configure Common settings relevant for all hosts
+- hosts: all
 
-#Indexer Clusters
-- import_playbook:
+  roles:
+   - common 
+
+#Configure Search Head Cluster
+- hosts: search
+
+  roles:
+   - search 
+
+#Configure Indexer Clusters
+- hosts: indexers
+
+  roles:
+   - common 
+
+#Configure Forwarders 
+- hosts: forwarders
+
+  roles:
+   - forwarder_heavyi
+   - forwarder_uni
+
 

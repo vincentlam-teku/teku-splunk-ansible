@@ -5,11 +5,11 @@
 
 deploypackages: /root/teku-splunk-ansible
 
-wget_url_splunk_enterprise: https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=7.1.2&product=splunk&filename=splunk-7.1.2-a0c72a66db66-linux-2.6-x86_64.rpm&wget=true
-wget_url_splunk_forwarder: https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=7.1.2&product=universalforwarder&filename=splunkforwarder-7.1.2-a0c72a66db66-linux-2.6-x86_64.rpm&wget=true
+wget_url_splunk_enterprise: https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=7.1.2&product=splunk&filename=splunk-7.1.2-a0c72a66db66-Linux-x86_64.tgz&wget=true
+wget_url_splunk_forwarder: https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=7.1.2&product=universalforwarder&filename=splunkforwarder-7.1.2-a0c72a66db66-Linux-x86_64.tgz&wget=true
 
-splunk_enterprise: splunk-7.1.2-a0c72a66db66-linux-2.6-x86_64.rpm
-splunk_forwarder: splunkforwarder-7.1.2-a0c72a66db66-linux-2.6-x86_64.rpm
+splunk_enterprise: splunk-7.1.2-a0c72a66db66-Linux-x86_64.tgz
+splunk_forwarder: splunkforwarder-7.1.2-a0c72a66db66-Linux-x86_64.tgz
 
 org: teku
 label: teku
