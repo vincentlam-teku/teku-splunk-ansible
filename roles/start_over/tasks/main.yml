@@ -13,6 +13,10 @@
   command: sudo rm -rf /opt/splunk
   ignore_errors: yes
 
+- name: Delete Splunk Base Config Files 
+  command: sudo rm -rf /var/tmp/base_configs
+  ignore_errors: yes
+
 - name: Kill running splunkd processes
   shell: pkill splunkd
   ignore_errors: yes
@@ -21,6 +25,6 @@
   shell: pkill mongod
   ignore_errors: yes
 
-- name: Delete Splunk Files
+- name: Delete Ansible Retry Files
   command: sudo rm -rf ~/teku-splunk-ansible/*.retry
   ignore_errors: yes
