@@ -3,7 +3,12 @@
 
 - name: Delete Splunk User
   command: sudo userdel -f splunk 
-  ignore_errors: yes  
+  ignore_errors: yes
+
+- name: Delete Splunk User Directory
+  command: sudo rm -rf /home/splunk
+  ignore_errors: yes
+  
 
 - name: Delete Splunk Installation Binary
   command: sudo rm -rf /opt/{{splunk_enterprise}}
@@ -11,6 +16,14 @@
 
 - name: Delete Splunk Files 
   command: sudo rm -rf /opt/splunk
+  ignore_errors: yes
+
+- name: Delete Splunk Forwader Installation Binary
+  command: sudo rm -rf /opt/{{splunk_forwarder}}
+  ignore_errors: yes  
+
+- name: Delete Splunk Forwarder Files 
+  command: sudo rm -rf /opt/splunkforwarder
   ignore_errors: yes
 
 - name: Delete Splunk Base Config Files 

@@ -1,27 +1,49 @@
 #Configure Desired Hosts for Deployment and link to related dependencies below:
 
-#Configure Common settings relevant for all hosts
-- hosts: all
+#Configure Utility Servers
+- hosts: master
 
   roles:
-   - common 
+   - common
+   - master
+
+- hosts: deployer
+
+  roles:
+   - common
+   - deployer 
+
+- hosts: deployment
+
+  roles:
+   - common
+   - deployment
+
+- hosts: licenser
+
+  roles:
+   - common
+   - licenser
 
 #Configure Search Head Cluster
 - hosts: search
 
   roles:
+   - common
    - search 
 
 #Configure Indexer Clusters
 - hosts: indexers
 
   roles:
+   - common
    - indexer
 
 #Configure Forwarders 
 - hosts: forwarder_heavy
 
   roles:
+   - common
    - forwarder_heavy
 
 - hosts: forwarder_uni

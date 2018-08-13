@@ -3,8 +3,11 @@
 # It relies of having all base configs built already, for information on this,
 # please contact Teku Professional Services @ www.tekugroup.net
 
-- name: Copy idx role configs to app path
-  copy: 
+- name: Copy base configs
+  copy: src={{ deploypackages }}{{ base_configs }} dest=/var/tmp owner=splunk group=splunk mode=0755
+
+- name: Copy base configs to app path
+  shell: cp -a "/var/tmp/base_configs/org_all_indexer_base" /opt/splunk/etc/apps/ owner=splunk group=splunk mode=0755
 
 - name: Restart Splunk
   shell: /opt/splunk/bin/splunk restart
@@ -12,7 +15,7 @@
   become_user: splunk
 
 - name: Configure splunk cluster slave
-  shell: /opt/splunk/bin/splunk edit cluster-config -master_uri https://{{ master_internal_ip }}:8089 -mode {{ peermode }} -replication_port {{ idx_rep_port }} -secret {{ idxcluster_secret }} -auth admin:changeme
+  shell: /opt/splunk/bin/splunk edit cluster-config -master_uri https://{{ master_internal_ip }}:8089 -mode {{ peermode }} -replication_port {{ idx_rep_port }} -secret {{ idxcluster_secret }} -auth {{ splkuser}}:{{ splkpass }}
   become: yes
   become_user: splunk
 

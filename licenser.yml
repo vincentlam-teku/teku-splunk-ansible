@@ -1,9 +1,8 @@
 - name: Install and configure License Master
-  description: A Splunk Enterprise Instance serving as license master of site
-  hosts: deployer
+  hosts: licenser
   remote_user: centos
   become: yes
 
   roles:
     - common
-    - Licenser
+    - licenser

@@ -51,31 +51,30 @@ master_internal_ip: 172.31.6.158
 #master_external_ip: 
 
 #Console
-#console_internal_ip: 
+console_internal_ip: 172.31.5.83
 #console_external_ip: 
 
 #Licenser
-#licenser_internal_ip: 
+licenser_internal_ip: 172.31.6.11
 #licenser_external_ip: 
 
 #Deployer 
-#deployer_internal_ip: 
+deployer_internal_ip: 172.31.0.240 
 #deployer_external_ip: 
 
 #Deployment
-#deployment_internal_ip: 
+deployment_internal_ip:	172.31.5.117 
 #deployment_external_ip: 
 
 
 #FORWARDERS
 #Forwarder-Heavy
-#forwarder_heavy_internal_ip: 
+forwarder_heavy_internal_ip: 172.31.6.107 
 #forwarder_heavy_external_ip: 
 
 #Forwarder-Universal
-#forwarder_universal_internal_ip: 
-#forwarder_universal_internal_ip: 
-
+forwarder_universal_internal_ip: 172.31.13.153
+#forwarder_universal_external_ip: 
 
 
 shcluster_label: teku_shcluster
@@ -94,6 +93,6 @@ shc_rep_port: 8181
 
 # Default Splunk Application User and Password at Install
 splkuser: admin
-splkpass: changeme
+splkpass: password
 
 idxdiscovery_secret: password123

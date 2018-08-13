@@ -24,6 +24,7 @@
 
 - name: Add Splunk Service User   
   command: sudo useradd -m -r splunk 
+  ignore_errors: yes  
 
 - name: Assign Password to Splunk Service User
   command: echo 'password' | sudo passwd splunk --stdin 
@@ -31,7 +32,7 @@
 - name: Assign /opt/splunk to Splunk Service User
   command: sudo chown -R splunk:splunk /opt/splunk 
 
-- name: Copy Deployment Client Configs from 
+- name: Copy User-Seed  
   copy: src=user-seed.conf dest=/opt/splunk/etc/system/local/ owner=splunk group=splunk mode=0755
 
 - name: Configure boot-start with Splunk user and generate admin user and password
