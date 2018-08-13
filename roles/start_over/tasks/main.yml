@@ -13,3 +13,14 @@
   command: sudo rm -rf /opt/splunk
   ignore_errors: yes
 
+- name: Kill running splunkd processes
+  shell: pkill splunkd
+  ignore_errors: yes
+
+- name: Kill running mongo db processes
+  shell: pkill mongod
+  ignore_errors: yes
+
+- name: Delete Splunk Files
+  command: sudo rm -rf ~/teku-splunk-ansible/*.retry
+  ignore_errors: yes

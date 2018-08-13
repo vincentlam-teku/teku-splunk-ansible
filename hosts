@@ -15,6 +15,7 @@
 # servers that are meant to be cluster masters, will also have the common config applied.
 #
 [master]
+127.0.0.1
 
 # servers that are meant to be splunk splunk monitoring consoles, will also have the common config applied
 #
@@ -27,7 +28,7 @@
 # servers that are meant to be splunk search head deployers, will also have the common config applied
 #
 [deployer]
-#127.0.0.1
+
 # servers that are meant to be splunk heavy forwarders, will also have the common config applied
 #
 [forwarder_heavy]
@@ -35,5 +36,4 @@
 # servers that are meant to be splunk universal forwarders, will also have the common config applied
 #
 [forwarder_uni]
-54.153.123.196
 

@@ -46,7 +46,7 @@ label: teku
 #UTILITIES
 
 #Master
-#master_internal_ip: 
+master_internal_ip: 172.31.6.158 
 #master_external_ip: 
 
 #Console
