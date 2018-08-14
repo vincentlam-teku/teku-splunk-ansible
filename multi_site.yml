@@ -31,6 +31,13 @@
   roles:
    - common
    - licenser
+  
+#Configure Indexer Cluster
+- hosts: indexer
+
+  roles:
+   - common
+   - indexer
 
 #Configure Search Head Cluster
 - hosts: search
@@ -38,13 +45,6 @@
   roles:
    - common
    - search 
-
-#Configure Indexer Clusters
-- hosts: indexer
-
-  roles:
-   - common
-   - indexer
 
 #Configure Forwarders 
 - hosts: forwarder_heavy
@@ -57,5 +57,3 @@
 
   roles:
    - forwarder_uni
-
-

@@ -58,8 +58,6 @@ site_count: 2
 search_peer_count: 2 #Indexer
 search_members: 2 #Search Heads
 forwarder_count: 2 
- forwarder_heavy: 1
- forwarder_uni: 1
 
 #Site Variables 
 disable_search_affinity: 0

@@ -14,13 +14,15 @@
   copy: src=disable-thp dest=/etc/init.d/ owner=root group=root mode=0755
 
 - name: Disable Transparent Huge Page
-  shell: chkconfig --add disable-thp
+  shell: sudo chkconfig --add disable-thp
 
 - name: Download Splunk
   get_url: url={{wget_url_splunk_enterprise}} dest=/opt/ owner=root group=root mode=0755
 
 - name: Install Splunk Enterprise package
-  command: tar -xvzf /opt/{{splunk_enterprise}} -C /opt 
+  unarchive: 
+   src: /opt/{{splunk_enterprise}} 
+   dest: /opt 
 
 - name: Add Splunk Service User   
   command: sudo useradd -m -r splunk 
@@ -39,11 +41,10 @@
   shell: /opt/splunk/bin/splunk enable boot-start -user splunk --accept-license --answer-yes --no-prompt
   ignore_errors: yes 
 
+- name: Copy Deployment Client Configs from 
+  copy: src=deploymentclient.conf dest=/opt/splunk/etc/system/local/ owner=splunk group=splunk mode=0755
+
 - name: Start Splunk
   shell: /opt/splunk/bin/splunk restart --answer-yes
   become: yes
   become_user: splunk
-
-- name: Copy Deployment Client Configs from 
-  copy: src=deploymentclient.conf dest=/opt/splunk/etc/system/local/ owner=splunk group=splunk mode=0755
-

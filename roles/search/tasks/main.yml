@@ -24,10 +24,53 @@
 - name: Copy base configs to app path
   shell: cp -a "/var/tmp/base_configs/org_all_search_base" /opt/splunk/etc/apps/
 
-- name: Start Splunk
-  shell: /opt/splunk/bin/splunk start
-  become: yes
-  become_user: splunk
+- name: Configure Splunk Server to join Index Cluser and be a Search Head Cluster Member by Copying server.conf 
+  copy: src=server.conf dest=/opt/splunk/etc/system/local/ owner=splunk group=splunk mode=0755
+
+- name: Configure Site ID
+  replace:
+    path: "/opt/splunk/etc/system/local/server.conf"
+    regexp: '<site_count>'
+    replace: "{{ site_count | int - 1 }}"
+    register: site_count
+    when: site_count.stdout != 0
+    backup: yes
+
+- name: Configure Master URI
+  replace:
+    path: "/opt/splunk/etc/system/local/server.conf"
+    regexp: '<master>'
+    replace: "{{ master_internal_ip }}"
+    backup: yes
+
+- name: Configure Deployer URI
+  replace:
+    path: "/opt/splunk/etc/system/local/server.conf"
+    regexp: '<deployer>'
+    replace: "{{ deployer_internal_ip }}"
+    backup: yes
+
+- name: Configure Master Port
+  replace:
+    path: "/opt/splunk/etc/system/local/server.conf"
+    regexp: '<splunkd_port>'
+    replace: "{{ splunkd_port }}"
+    backup: yes
+
+- name: Edit server cluster config for search head cluster pass4Symm value
+  replace:
+    path: "/opt/splunk/etc/system/local/server.conf"
+    regexp: '<shcluster_secret>'
+    replace: "{{ shcluster_secret }}"
+    backup: yes
+
+- name: Configure Replication Port
+  replace:
+    path: "/opt/splunk/etc/system/local/server.conf"
+    regexp: '<shc_rep_port>'
+    replace: "{{ shc_rep_port }}"
+    backup: yes
+
 
 #- name: Configure splunk to join index cluster
 #  shell: /opt/splunk/bin/splunk edit cluster-config -master_uri https://{{ master_internal_ip }}:8089 -mode searchhead -multisite true -site site1 -replication_port {{ idx_rep_port }} -secret {{ idxcluster_secret }} -auth {{ splkuser }}:{{ splkpass }}

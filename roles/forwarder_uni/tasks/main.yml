@@ -19,9 +19,13 @@
 - name: Copy User-Seed
   copy: src=user-seed.conf dest=/opt/splunkforwarder/etc/system/local/ owner=splunk group=splunk mode=0755
 
+- name: Copy Output.conf
+  copy: src=output.conf dest=/opt/splunkforwarder/etc/system/local/ owner=splunk group=splunk mode=0755
+
 - name: Configure boot-start with splunk user
   shell: /opt/splunkforwarder/bin/splunk enable boot-start -user splunk --accept-license --answer-yes
-
+  ignore_errors: yes  
+ 
 - name: Start Splunk
   shell: /opt/splunkforwarder/bin/splunk restart
   become: yes

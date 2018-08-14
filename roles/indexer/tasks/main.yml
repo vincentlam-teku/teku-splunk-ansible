@@ -9,8 +9,45 @@
 - name: Copy base configs to app path
   shell: cp -a "/var/tmp/base_configs/org_all_indexer_base" /opt/splunk/etc/apps/ owner=splunk group=splunk mode=0755
 
-- name: Configure splunk cluster slave
-  shell:
+- name: Configure Splunk Search Peer
+  copy: src=server.conf dest=/opt/splunk/etc/system/local/ owner=splunk group=splunk mode=0755
+
+- name: Configure Site ID
+  replace:
+    path: "/opt/splunk/etc/system/local/server.conf"
+    regexp: '<site_count>'
+    replace: "{{ site_count | int -1 }}"
+    register: site_count
+    when: site_count.stdout != 0
+    backup: yes
+
+- name: Configure Master URI
+  replace:
+    path: "/opt/splunk/etc/system/local/server.conf"
+    regexp: '<master>'
+    replace: "{{ master_internal_ip }}"
+    backup: yes
+
+- name: Configure Master Port
+  replace:
+    path: "/opt/splunk/etc/system/local/server.conf"
+    regexp: '<splunkd_port>'
+    replace: "{{ splunkd_port }}"
+    backup: yes
+
+- name: Edit server cluster config for index cluster pass4Symm value
+  replace:
+    path: "/opt/splunk/etc/system/local/server.conf"
+    regexp: '<idxcluster_secret>'
+    replace: "{{ idxcluster_secret }}"
+    backup: yes
+
+- name: Configure Replication Port
+  replace:
+    path: "/opt/splunk/etc/system/local/server.conf"
+    regexp: '<idx_rep_port>'
+    replace: "{{ idx_rep_port }}"
+    backup: yes
 
 #- name: Configure splunk cluster slave
 #  shell: /opt/splunk/bin/splunk edit cluster-config -master_uri https://{{ master_internal_ip }}:8089 -mode {{ peermode }} -replication_port {{ idx_rep_port }} -secret {{ idxcluster_secret }} -auth {{ splkuser}}:{{ splkpass }}
