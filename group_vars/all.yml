@@ -17,32 +17,6 @@ label: teku
 
 #Declare Deployment Hosts 
 #Comment out to make deployment
-
-#INDEXER#
-#Indexer_0:
-#indexer_0_internal_ip:
-#indexer_0_external_ip: 
-
-#Indexer_1:
-#indexer_1_internal_ip:  
-#indexer_1_external_ip: 
-
-#Indexer_2:
-#indexer_2_internal_ip:
-#indexer_2_external_ip: 
-
-#SEARCH
-#Search_Head_0:
-#serch_head_0_internal_ip: 
-#search_head_0_external_ip:
-
-#Search_Head1
-#serch_head_1_internal_ip: 
-#search_head_1_external_ip:
-
-#Search_Head2
-#serch_head_2_internal_ip: 
-#search_head_2_external_ip:
  
 #UTILITIES
 
@@ -66,32 +40,48 @@ deployer_internal_ip: 172.31.0.240
 deployment_internal_ip:	172.31.5.117 
 #deployment_external_ip: 
 
-
-#FORWARDERS
-#Forwarder-Heavy
-forwarder_heavy_internal_ip: 172.31.6.107 
-#forwarder_heavy_external_ip: 
-
-#Forwarder-Universal
-forwarder_universal_internal_ip: 172.31.13.153
-#forwarder_universal_external_ip: 
-
-
+#LABELS
 shcluster_label: teku_shcluster
+idxcluster_label: teku_idxcluster
+
+#SECRETS for PASS4SYM
 shcluster_secret: password123
 idxcluster_secret: password123
-discoverysecret: password123
 idxdiscovery_secret: password123
 
+#Multi Site Status?
+multisite_status: true
+#multisite_status: false
 
-# Fixed Values
-peermode: slave
-membermode: searchhead
+#Counts
+site_count: 2
+search_peer_count: 2 #Indexer
+search_members: 2 #Search Heads
+forwarder_count: 2 
+ forwarder_heavy: 1
+ forwarder_uni: 1
 
-# Optional Values
-ntpserver: pool.ntp.org
-idx_rep_port: 9887
-shc_rep_port: 8181
+#Site Variables 
+disable_search_affinity: 0
+master_residence_site: 1  
+other_site: 2
+
+available_sites: site1,site2
+
+#Site Replication Factor
+replication_factor: 2 
+site_replication_factor: origin:1,total:2 
+
+#Search Factor
+search_factor: 2
+site_search_factor: origin:1,total:2
+
+# Ports
+splunk_web_port: 8000
+splunkd_port: 8089
+idx_rep_port: 9100
+shc_rep_port: 9200
+forwarder_listening_port: 9997
 
 # Default Splunk Application User and Password at Install
 splkuser: admin

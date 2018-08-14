@@ -29,15 +29,15 @@
   become: yes
   become_user: splunk
 
-- name: Configure splunk to join index cluster
-  shell: /opt/splunk/bin/splunk edit cluster-config -master_uri https://{{ master_internal_ip }}:8089 -mode searchhead -multisite true -site site1 -replication_port {{ idx_rep_port }} -secret {{ idxcluster_secret }} -auth {{ splkuser }}:{{ splkpass }}
-  become: yes
-  become_user: splunk
+#- name: Configure splunk to join index cluster
+#  shell: /opt/splunk/bin/splunk edit cluster-config -master_uri https://{{ master_internal_ip }}:8089 -mode searchhead -multisite true -site site1 -replication_port {{ idx_rep_port }} -secret {{ idxcluster_secret }} -auth {{ splkuser }}:{{ splkpass }}
+#  become: yes
+#  become_user: splunk
 
-- name: Configure splunk as search cluster member
-  shell: /opt/splunk/bin/splunk init shcluster-config -auth {{ splkuser }}:{{ splkpass }} -mgmt_uri https://{{ master_internal_ip }}:8089 -replication_port 9980 -replication_factor 2 -conf_deploy_fetch_url https://{{ deployer_internal_ip }}:8089 -secret {{ shcluster_secret }} -shcluster_label {{ shclusterlabel }}
-  become: yes
-  become_user: splunk
+#- name: Configure splunk as search cluster member
+#  shell: /opt/splunk/bin/splunk init shcluster-config -auth {{ splkuser }}:{{ splkpass }} -mgmt_uri https://{{ master_internal_ip }}:8089 -replication_port 9980 -replication_factor 2 -conf_deploy_fetch_url https://{{ deployer_internal_ip }}:8089 -secret {{ shcluster_secret }} -shcluster_label {{ shcluster_label }}
+#  become: yes
+#  become_user: splunk
 
 - name: Fix 'app' permissions
   file: path=/opt/splunk/etc/apps owner=splunk group=splunk mode=0755 state=directory recurse=yes

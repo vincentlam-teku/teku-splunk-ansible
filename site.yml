@@ -1,5 +1,12 @@
 #Configure Desired Hosts for Deployment and link to related dependencies below:
 
+#Monolithic
+
+#Single Site
+
+#Multi Site
+
+
 #Configure Utility Servers
 - hosts: master
 
@@ -33,7 +40,7 @@
    - search 
 
 #Configure Indexer Clusters
-- hosts: indexers
+- hosts: indexer
 
   roles:
    - common

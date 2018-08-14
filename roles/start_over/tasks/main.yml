@@ -1,6 +1,10 @@
 ---
 # This playbook contains the tasks to reset instance and remove all traces of former setup.
 
+- name: Splunk Clean All Data
+  command: /opt/splunk/bin/splunk clean globaldata -f 
+  ignore_errors: yes
+
 - name: Stop Splunk
   command: /opt/splunk/bin/splunk stop
   ignore_errors: yes

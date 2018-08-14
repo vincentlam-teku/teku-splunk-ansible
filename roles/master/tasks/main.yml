@@ -14,14 +14,14 @@
     replace: "{{ master_internal_ip }}"
     backup: yes
 
-- name: Edit outputs base config indexer discoevry secret value
+- name: Edit outputs base config indexer discovery secret value
   replace:
     path: "/var/tmp/base_configs/org_all_core_outputs/local/outputs.conf"
     regexp: '<discoverysecret>'
     replace: "{{ discoverysecret }}"
     backup: yes
 
-- name: Edit server base config - indexer discoery secret value
+- name: Edit server base config - indexer discovery secret value
   replace:
     path: "/var/tmp/base_configs/org_cm_base/local/server.conf"
     regexp: '<discoverysecret>'

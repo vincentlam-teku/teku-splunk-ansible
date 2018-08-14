@@ -2,7 +2,7 @@
 # This role contains plays to configure the License Master
 
 - name: Create license folder
-  command: mkdir /opt/splunk/licenses state=directory owner=splunk group=splunk mode=744
+  command: mkdir /opt/splunk/licenses 
   ignore_errors: yes
 
 #- name: Install license key
