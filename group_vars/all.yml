@@ -81,6 +81,8 @@ shcluster_label: teku_shcluster
 shcluster_secret: password123
 idxcluster_secret: password123
 discoverysecret: password123
+idxdiscovery_secret: password123
+
 
 # Fixed Values
 peermode: slave
@@ -95,4 +97,3 @@ shc_rep_port: 8181
 splkuser: admin
 splkpass: password
 
-idxdiscovery_secret: password123

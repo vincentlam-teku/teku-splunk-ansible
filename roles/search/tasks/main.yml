@@ -6,23 +6,23 @@
 
 - name: Edit outputs base config master value
   replace:
-    path: "/var/tmp/base_config/org_all_core_outputs/local/outputs.conf"
+    path: "/var/tmp/base_configs/org_all_core_outputs/local/outputs.conf"
     regexp: '<master>'
     replace: "{{ master_internal_ip }}"
     backup: yes
 
 - name: Edit outputs base config secret value
   replace:
-    path: "/var/tmp/base_config/org_all_core_outputs/local/outputs.conf"
+    path: "/var/tmp/base_configs/org_all_core_outputs/local/outputs.conf"
     regexp: '<secret>'
     replace: "{{ discoverysecret }}"
     backup: yes
 
 - name: Copy base configs to app path
-  shell: cp -a "/var/tmp/base_config/org_all_core_outputs" /opt/splunk/etc/apps/
+  shell: cp -a "/var/tmp/base_configs/org_all_core_outputs" /opt/splunk/etc/apps/
 
 - name: Copy base configs to app path
-  shell: cp -a "/var/tmp/base_config/org_all_search_base" /opt/splunk/etc/apps/
+  shell: cp -a "/var/tmp/base_configs/org_all_search_base" /opt/splunk/etc/apps/
 
 - name: Start Splunk
   shell: /opt/splunk/bin/splunk start
@@ -30,12 +30,12 @@
   become_user: splunk
 
 - name: Configure splunk to join index cluster
-  shell: /opt/splunk/bin/splunk edit cluster-config -master_uri https://{{ master_internal_ip }}:8089 -mode searchhead -multisite true -site site1 -replication_port {{ idx_rep_port }} -secret {{ idxclustersecret }} -auth {{ splkuser }}:{{ splkpass }}
+  shell: /opt/splunk/bin/splunk edit cluster-config -master_uri https://{{ master_internal_ip }}:8089 -mode searchhead -multisite true -site site1 -replication_port {{ idx_rep_port }} -secret {{ idxcluster_secret }} -auth {{ splkuser }}:{{ splkpass }}
   become: yes
   become_user: splunk
 
 - name: Configure splunk as search cluster member
-  shell: /opt/splunk/bin/splunk init shcluster-config -auth {{ splkuser }}:{{ splkpass }} -mgmt_uri https://{{ master_internal_ip }}:8089 -replication_port 9980 -replication_factor 2 -conf_deploy_fetch_url https://{{ deployer_internal_ip }}:8089 -secret {{ shclustersecret }} -shcluster_label {{ shclusterlabel }}
+  shell: /opt/splunk/bin/splunk init shcluster-config -auth {{ splkuser }}:{{ splkpass }} -mgmt_uri https://{{ master_internal_ip }}:8089 -replication_port 9980 -replication_factor 2 -conf_deploy_fetch_url https://{{ deployer_internal_ip }}:8089 -secret {{ shcluster_secret }} -shcluster_label {{ shclusterlabel }}
   become: yes
   become_user: splunk
 

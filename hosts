@@ -16,7 +16,7 @@ host_key_checking = False
 #
 [indexer]
 #127.0.0.1
-#172.31.6.64 #Indexer1
+172.31.6.64 #Indexer1
 172.31.8.30 #Indexer2
 
 # servers that are meant to be license masters, will also have the common config applied.
@@ -27,8 +27,8 @@ host_key_checking = False
 # servers that are meant to be cluster masters, will also have the common config applied.
 #
 [master]
-127.0.0.1
-#172.31.6.158
+#127.0.0.1
+172.31.6.158
 
 # servers that are meant to be splunk splunk monitoring consoles, will also have the common config applied
 #

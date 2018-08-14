@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<license>
+  <signature>urkkC+WAJFDV0nIsCbzNkcMATU5N33oue8fkAYxHEADrEG/OCnpftq988NQVPC3aQLZibWrj2VB0fV8s1O4KsedPHg1z0UuFB0bXP8g+cX5teYd+Vb76kBai3evJxPAF17Y7vLtjVCxW8c7WXpuMGYVh4zfGxVosw0EbbTqTuml+YWpLCUvPk0wQGJ0tBJwCLvvpi5IsTkHTRNjnOxEGeHYsaK681eYLLbclP+8aol9GcjqU8wlsGPEQHWZ/rG4b2wGmEIKhlHL9Njg6/qwgW7qYNVlBATrGCBInw/Q5ZUx1DJBkA1xSpH6cmAAciM1J59zas2nM3ew8rgjLdOvlGA==</signature>
+  <payload>
+    <type>enterprise</type>
+    <group_id>Enterprise</group_id>
+    <quota>209715200</quota>
+    <max_violations>5</max_violations>
+    <window_period>30</window_period>
+    <creation_time>1532545906</creation_time>
+    <label>Splunk Enterprise Sales Trial</label>
+    <expiration_time>1536433906</expiration_time>
+    <features>
+      <feature>Auth</feature>
+      <feature>FwdData</feature>
+      <feature>RcvData</feature>
+      <feature>LocalSearch</feature>
+      <feature>DistSearch</feature>
+      <feature>RcvSearch</feature>
+      <feature>ScheduledSearch</feature>
+      <feature>Alerting</feature>
+      <feature>DeployClient</feature>
+      <feature>DeployServer</feature>
+      <feature>SplunkWeb</feature>
+      <feature>SigningProcessor</feature>
+      <feature>SyslogOutputProcessor</feature>
+      <feature>CanBeRemoteMaster</feature>
+      <feature>AllowDuplicateKeys</feature>
+    </features>
+    <sourcetypes/>
+    <guid>4AB1EE2E-33FE-4343-9D7E-C0DC7B21B8BF</guid>
+  </payload>
+</license>

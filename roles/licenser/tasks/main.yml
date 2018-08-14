@@ -2,11 +2,14 @@
 # This role contains plays to configure the License Master
 
 - name: Create license folder
-  file: path=/opt/splunk/licenses state=directory owner=splunk group=splunk mode=744
+  command: mkdir /opt/splunk/licenses state=directory owner=splunk group=splunk mode=744
+  ignore_errors: yes
 
-- name: Install license key
-  command: runuser -l splunk -c "/opt/splunk/bin/splunk add licenses /opt/splunk/licenses/splunk.license"
-  ignore_errors: True
+#- name: Install license key
+ # shell: /opt/splunk/bin/splunk add licenses splunk.license"
+ # become: yes
+ # become_user: splunk
+ # ignore_errors: yes
 
 - name: Restart Splunk
-  command: runuser -l splunk -c "splunk restart"
+  command: /opt/splunk/bin/splunk restart --answer-yes

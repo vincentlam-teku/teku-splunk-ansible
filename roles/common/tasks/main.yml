@@ -35,15 +35,15 @@
 - name: Copy User-Seed  
   copy: src=user-seed.conf dest=/opt/splunk/etc/system/local/ owner=splunk group=splunk mode=0755
 
-- name: Configure boot-start with Splunk user and generate admin user and password
+- name: Configure boot-start with Splunk user
   shell: /opt/splunk/bin/splunk enable boot-start -user splunk --accept-license --answer-yes --no-prompt
+  ignore_errors: yes 
 
 - name: Start Splunk
-  shell: /opt/splunk/bin/splunk restart
+  shell: /opt/splunk/bin/splunk restart --answer-yes
   become: yes
   become_user: splunk
 
 - name: Copy Deployment Client Configs from 
   copy: src=deploymentclient.conf dest=/opt/splunk/etc/system/local/ owner=splunk group=splunk mode=0755
-
 
