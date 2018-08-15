@@ -5,57 +5,57 @@
 ansible_ssh_private_key_file=./splk-lab.pem
 host_key_checking = False
 
-# servers that are meant to be splunk search heads, will also have the common config applied.
-#
-[search]
-#127.0.0.1
-172.31.1.197 #Search1
-172.31.11.211 #Search2
-
-# servers that are meant to be indexers, will also have the common config applied.
-#
-[indexer]
-#127.0.0.1
-172.31.6.64 #Indexer1
-172.31.8.30 #Indexer2
-
-# servers that are meant to be license masters, will also have the common config applied.
-[licenser]
-#127.0.0.1
-172.31.6.11
-
 # servers that are meant to be cluster masters, will also have the common config applied.
 #
 [master]
 #127.0.0.1
-172.31.6.158
-
-# servers that are meant to be splunk splunk monitoring consoles, will also have the common config applied
-#
-[monitor]
-#127.0.0.1
-172.31.5.83
-
-# servers that are meant to be splunk deployment servers, will also have the common config applied
-#
-[deployment]
-#127.0.0.1
-172.31.5.117
+172.31.1.47
 
 # servers that are meant to be splunk search head deployers, will also have the common config applied
 #
 [deployer]
 #127.0.0.1
-172.31.0.240
+172.31.10.214
+
+# servers that are meant to be splunk deployment servers, will also have the common config applied
+#
+[deployment]
+#127.0.0.1
+172.31.12.228
+
+# servers that are meant to be splunk splunk monitoring consoles, will also have the common config applied
+#
+[monitor]
+#127.0.0.1
+172.31.1.30
+
+# servers that are meant to be license masters, will also have the common config applied.
+[licenser]
+#127.0.0.1
+172.31.5.3
+
+# servers that are meant to be indexers, will also have the common config applied.
+#
+[indexer]
+#127.0.0.1
+172.31.7.178 #Indexer1
+172.31.15.38 #Indexer2
+
+# servers that are meant to be splunk search heads, will also have the common config applied.
+#
+[search]
+#127.0.0.1
+172.31.14.120 #Search1
+172.31.2.231 #Search2
 
 # servers that are meant to be splunk heavy forwarders, will also have the common config applied
 #
 [forwarder_heavy]
 #127.0.0.1
-172.31.6.107
+172.31.1.122
 
 # servers that are meant to be splunk universal forwarders, will also have the common config applied
 #
 [forwarder_uni]
 #127.0.0.1
-172.31.13.153
+172.31.1.254
