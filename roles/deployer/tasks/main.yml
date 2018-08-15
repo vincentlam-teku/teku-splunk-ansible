@@ -22,18 +22,18 @@
   shell: cp -a "/var/tmp/base_configs/org_all_deployer_base" /opt/splunk/etc/apps/
 
 - name: Configure Splunk as Deployer
-  copy: src=server.conf dest=/opt/splunk/etc/system/local/ owner=splunk group=splunk mode=0755
+  copy: src=server.conf dest=/opt/splunk/etc/apps/org_all_deployer_base/ owner=splunk group=splunk mode=0755
 
 - name: Edit server cluster config for search head secret pass4symm value
   replace:
-    path: "/opt/splunk/etc/system/local/server.conf"
+    path: "/opt/splunk/etc/apps/org_all_deployer_base/server.conf"
     regexp: '<shcluster_secret>'
     replace: "{{ shcluster_secret }}"
     backup: yes
 
 - name: Edit server cluster config for search head cluster label
   replace:
-    path: "/opt/splunk/etc/system/local/server.conf"
+    path: "/opt/splunk/etc/apps/org_all_deployer_base/server.conf"
     regexp: '<shcluster_lable>'
     replace: "{{ shcluster_label }}"
     backup: yes
@@ -41,7 +41,7 @@
 - name: Fix 'app' permissions
   file: path=/opt/splunk/etc/apps owner=splunk group=splunk mode=0755 state=directory recurse=yes
 
-- name: Restart Splunk
-  shell: /opt/splunk/bin/splunk restart
-  become: yes
-  become_user: splunk
+#- name: Restart Splunk
+#  shell: /opt/splunk/bin/splunk restart
+#  become: yes
+#  become_user: splunk

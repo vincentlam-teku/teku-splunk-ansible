@@ -47,11 +47,11 @@
    - search 
 
 #Configure Forwarders 
-- hosts: forwarder_heavy
+#- hosts: forwarder_heavy
 
-  roles:
-   - common
-   - forwarder_heavy
+#  roles:
+#   - common
+#   - forwarder_heavy
 
 - hosts: forwarder_uni
 

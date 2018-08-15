@@ -10,11 +10,11 @@
   shell: cp -a "/var/tmp/base_configs/org_all_indexer_base" /opt/splunk/etc/apps/ owner=splunk group=splunk mode=0755
 
 - name: Configure Splunk Search Peer
-  copy: src=server.conf dest=/opt/splunk/etc/system/local/ owner=splunk group=splunk mode=0755
+  copy: src=server.conf dest=/opt/splunk/etc/apps/org_all_indexer_base/ owner=splunk group=splunk mode=0755
 
 - name: Configure Site ID
   replace:
-    path: "/opt/splunk/etc/system/local/server.conf"
+    path: "/opt/splunk/etc/apps/org_all_indexer_base/server.conf"
     regexp: '<site_count>'
     replace: "{{ site_count | int -1 }}"
     register: site_count
@@ -23,28 +23,28 @@
 
 - name: Configure Master URI
   replace:
-    path: "/opt/splunk/etc/system/local/server.conf"
+    path: "/opt/splunk/etc/apps/org_all_indexer_base/server.conf"
     regexp: '<master>'
     replace: "{{ master_internal_ip }}"
     backup: yes
 
 - name: Configure Master Port
   replace:
-    path: "/opt/splunk/etc/system/local/server.conf"
+    path: "/opt/splunk/etc/apps/org_all_indexer_base/server.conf"
     regexp: '<splunkd_port>'
     replace: "{{ splunkd_port }}"
     backup: yes
 
 - name: Edit server cluster config for index cluster pass4Symm value
   replace:
-    path: "/opt/splunk/etc/system/local/server.conf"
+    path: "/opt/splunk/etc/apps/org_all_indexer_base/server.conf"
     regexp: '<idxcluster_secret>'
     replace: "{{ idxcluster_secret }}"
     backup: yes
 
 - name: Configure Replication Port
   replace:
-    path: "/opt/splunk/etc/system/local/server.conf"
+    path: "/opt/splunk/etc/apps/org_all_indexer_base/server.conf"
     regexp: '<idx_rep_port>'
     replace: "{{ idx_rep_port }}"
     backup: yes
@@ -54,7 +54,7 @@
 #  become: yes
 #  become_user: splunk
 
-- name: Restart Splunk
-  shell: /opt/splunk/bin/splunk restart
-  become: yes
-  become_user: splunk
+#- name: Restart Splunk
+#  shell: /opt/splunk/bin/splunk restart
+#  become: yes
+#  become_user: splunk

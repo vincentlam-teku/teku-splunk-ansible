@@ -55,6 +55,11 @@ multisite_status: true
 
 #Counts
 site_count: 2
+
+#Host Counts
+master_count: 1
+licenser_count: 1
+monitor_count: 1
 search_peer_count: 2 #Indexer
 search_members: 2 #Search Heads
 forwarder_count: 2 
@@ -62,7 +67,6 @@ forwarder_count: 2
 #Site Variables 
 disable_search_affinity: 0
 master_residence_site: 1  
-other_site: 2
 
 available_sites: site1,site2
 

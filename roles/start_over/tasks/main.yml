@@ -10,7 +10,7 @@
   ignore_errors: yes
 
 - name: Stop Splunk
-  command: /opt/splunk/bin/splunk stop
+  command: /opt/splunk/bin/splunk stop --accept-license --answer-yes --no-prompt
   ignore_errors: yes
 
 - name: Disable Splunk Boot-Start

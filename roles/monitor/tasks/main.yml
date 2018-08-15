@@ -24,10 +24,10 @@
 - name: Copy global outputs config to app path
   shell: cp -a "/var/tmp/base_configs/org_all_core_outputs" /opt/splunk/etc/apps/
 
-- name: Configure splunk to join index cluster
-  shell: /opt/splunk/bin/splunk edit cluster-config -master_uri https://{{ master_internal_ip }}:8089 -mode searchhead -multisite true -site site1 -replication_port 9887 -secret {{ clustersecret }} -auth {{ splkuser }}:{{ splkpass }}
-  become: yes
-  become_user: splunk
+#- name: Configure splunk to join index cluster
+#  shell: /opt/splunk/bin/splunk edit cluster-config -master_uri https://{{ master_internal_ip }}:8089 -mode searchhead -multisite true -site site1 -replication_port 9887 -secret {{ clustersecret }} -auth {{ splkuser }}:{{ splkpass }}
+#  become: yes
+#  become_user: splunk
 
 - name: Fix 'app' permissions
   file: path=/opt/splunk/etc/apps owner=splunk group=splunk mode=0755 state=directory recurse=yes

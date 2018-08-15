@@ -14,6 +14,13 @@
     replace: "{{ master_internal_ip }}"
     backup: yes
 
+- name: Edit outputs base config master value
+  replace:
+    path: "/var/tmp/base_configs/org_all_core_outputs/local/outputs.conf"
+    regexp: '<splunkd_port>'
+    replace: "{{ splunkd_port }}"
+    backup: yes
+
 - name: Edit outputs base config indexer discovery secret value
   replace:
     path: "/var/tmp/base_configs/org_all_core_outputs/local/outputs.conf"
@@ -28,61 +35,73 @@
   shell: cp -a "/var/tmp/base_configs/org_cm_base" /opt/splunk/etc/apps/
 
 - name: Configure Splunk as Cluster Master
-  copy: src=server.conf dest=/opt/splunk/etc/system/local/ owner=splunk group=splunk mode=0755
+  copy: src=server.conf dest=/opt/splunk/etc/apps/org_cm_base/local/ owner=splunk group=splunk mode=0755
+
+#- name: Start Splunk
+#  shell: /opt/splunk/bin/splunk restart
+#  become: yes
+#  become_user: splunk
 
 - name: Configure Site Number
   replace:
-    path: "/opt/splunk/etc/system/local/server.conf"
+    path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf"
     regexp: '<master_residence_site>'
     replace: "{{ master_residence_site }}"
     backup: yes
 
 - name: Configure MultiSite Status
   replace:
-    path: "/opt/splunk/etc/system/local/server.conf"
+    path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf"
     regexp: '<multisite_status>'
     replace: "{{ multisite_status }}"
     backup: yes
 
 - name: Configure Available Sites
   replace:
-    path: "/opt/splunk/etc/system/local/server.conf"
+    path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf"
     regexp: '<available_sites>'
     replace: "{{ available_sites }}"
     backup: yes
 
 - name: Configure Site Replication Factor
   replace:
-    path: "/opt/splunk/etc/system/local/server.conf"
+    path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf"
     regexp: '<site_replication_factor'
     replace: "{{ site_replication_factor }}"
     backup: yes
 
 - name: Configure Site Search Factor
   replace:
-    path: "/opt/splunk/etc/system/local/server.conf"
+    path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf"
     regexp: '<site_search_factor'
     replace: "{{ site_search_factor }}"
     backup: yes
 
 - name: Edit server cluster config-indexer discovery secret values
   replace:
-    path: "/opt/splunk/etc/system/local/server.conf"
+    path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf"
     regexp: '<idxcluster_secret>'
     replace: "{{ idxcluster_secret }}"
     backup: yes
 
 - name: Edit server cluster config for search head secret pass4symm value
   replace:
-    path: "/opt/splunk/etc/system/local/server.conf"
+    path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf"
     regexp: '<shcluster_secret>'
     replace: "{{ shcluster_secret }}"
+    backup: yes
+
+- name: Edit server cluster config for cluster labele
+  replace:
+    path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf"
+    regexp: '<shcluster_label>'
+    replace: "{{ shcluster_label }}"
     backup: yes
 
 - name: Fix 'app' permissions
   file: path=/opt/splunk/etc/apps owner=splunk group=splunk mode=0755 state=directory recurse=yes
 
-- name: Restart Splunk
-  shell: /opt/splunk/bin/splunk restart --answer-yes
-  become: yes
-  become_user: splunk
+#- name: Restart Splunk
+#  shell: /opt/splunk/bin/splunk restart
+#  become: yes
+#  become_user: splunk
