@@ -8,12 +8,19 @@
     replace: "{{ master_internal_ip }}"
     backup: yes
 
+- name: Edit outputs base config master value
+  replace:
+    path: "/var/tmp/base_configs/org_all_core_outputs/local/outputs.conf"
+    regexp: '<splunkd_port>'
+    replace: "{{ splunkd_port }}"
+    backup: no
+
 - name: Edit outputs base config secret value
   replace:
     path: "/var/tmp/base_configs/org_all_core_outputs/local/outputs.conf"
-    regexp: '<secret>'
-    replace: "{{ discoverysecret }}"
-    backup: yes
+    regexp: '<idxcluster_secret>'
+    replace: "{{ idxcluster_secret }}"
+    backup: no
 
 - name: Copy base configs to app path
   shell: cp -a "/var/tmp/base_configs/org_all_core_outputs" /opt/splunk/etc/apps/

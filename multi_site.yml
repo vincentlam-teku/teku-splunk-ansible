@@ -1,59 +1,81 @@
 #Configure Desired Hosts for Deployment and link to related dependencies below:
 
-#Monolithic
-
-#Single Site
-
 #Multi Site
 
 
-#Configure Utility Servers
+#Install Splunk Enterprise on All Hosts and Configure them for Best Practices
+
+#Set Open File Limit for Splunk
+#Set Max Processes Limit
+#Set Core File Size
+#Copy Disable Transparent Huge Page File and Disable Transparent Huge Page File via Chkconfig
+#Download Splunk Binary via Wget 
+#Install via Splunk Binary
+
+#All Roles Except for Universal Forwarder
+- hosts: !forwarder_uni 
+  
+  roles:
+   - common
+
+#Configure Utility Servers 
+
+- hosts: licenser
+
+  roles:
+   - licenser
+
 - hosts: master
 
   roles:
-   - common
    - master
 
 - hosts: deployer
 
   roles:
-   - common
    - deployer 
 
 - hosts: deployment
 
   roles:
-   - common
    - deployment
-
-- hosts: licenser
-
-  roles:
-   - common
-   - licenser
   
-#Configure Indexer Cluster
+#Configure Indexer Hosts as Splunk Indexers 
 - hosts: indexer
 
   roles:
-   - common
    - indexer
 
-#Configure Search Head Cluster
+#Configure Search Hosts as Splunk Search Heads
 - hosts: search
 
   roles:
-   - common
    - search 
 
-#Configure Forwarders 
-#- hosts: forwarder_heavy
+#Configure Forwarder Hosts as Splunk Forwarders
+- hosts: forwarder_heavy
 
-#  roles:
-#   - common
-#   - forwarder_heavy
+  roles:
+   - forwarder_heavy
 
 - hosts: forwarder_uni
 
   roles:
    - forwarder_uni
+
+#Configure all Hosts as License Slaves 
+- hosts: all
+
+  roles:
+   - license_pool
+
+#Configure Clustering
+
+	# Configure Master
+
+	# Configure Peer Nodes - Indexers 
+
+	# Configure Search Heads to join Cluster 
+
+# 
+

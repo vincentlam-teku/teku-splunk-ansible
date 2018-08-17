@@ -1,0 +1,15 @@
+[general]
+site = site<master_residence_site>
+
+[indexer_discovery]
+pass4SymmKey = <idxdiscovery_secret>
+indexerWeightByDiskCapacity = true
+
+[clustering]
+multisite= <multisite_status>
+mode = master
+available_sites = <available_sites>
+site_replication_factor = <site_replication_factor>
+site_search_factor = <site_search_factor>
+pass4SymmKey = <idxcluster_secret>
+

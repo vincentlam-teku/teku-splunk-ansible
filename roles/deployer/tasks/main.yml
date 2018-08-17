@@ -6,14 +6,21 @@
     path: "/var/tmp/base_configs/org_all_core_outputs/local/outputs.conf"
     regexp: '<master>'
     replace: "{{ master_internal_ip }}"
-    backup: yes
+    backup: no
+
+- name: Edit outputs base config master value
+  replace:
+    path: "/var/tmp/base_configs/org_all_core_outputs/local/outputs.conf"
+    regexp: '<splunkd_port>'
+    replace: "{{ splunkd_port }}"
+    backup: no
 
 - name: Edit outputs base config secret value
   replace:
     path: "/var/tmp/base_configs/org_all_core_outputs/local/outputs.conf"
-    regexp: '<secret>'
-    replace: "{{ discoverysecret }}"
-    backup: yes
+    regexp: '<idxdiscovery_secret>'
+    replace: "{{ idxdiscovery_secret }}"
+    backup: no
 
 - name: Copy base configs to app path
   shell: cp -a "/var/tmp/base_configs/org_all_core_outputs" /opt/splunk/etc/apps/
@@ -29,19 +36,19 @@
     path: "/opt/splunk/etc/apps/org_all_deployer_base/server.conf"
     regexp: '<shcluster_secret>'
     replace: "{{ shcluster_secret }}"
-    backup: yes
+    backup: no
 
 - name: Edit server cluster config for search head cluster label
   replace:
     path: "/opt/splunk/etc/apps/org_all_deployer_base/server.conf"
     regexp: '<shcluster_lable>'
     replace: "{{ shcluster_label }}"
-    backup: yes
+    backup: no
 
 - name: Fix 'app' permissions
   file: path=/opt/splunk/etc/apps owner=splunk group=splunk mode=0755 state=directory recurse=yes
 
-#- name: Restart Splunk
-#  shell: /opt/splunk/bin/splunk restart
-#  become: yes
-#  become_user: splunk
+- name: Restart Splunk
+  shell: /opt/splunk/bin/splunk restart
+  become: yes
+  become_user: splunk

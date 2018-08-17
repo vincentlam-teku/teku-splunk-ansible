@@ -21,23 +21,23 @@ label: teku
 #UTILITIES
 
 #Master
-master_internal_ip: 172.31.6.158 
+master_internal_ip:  
 #master_external_ip: 
 
 #Console
-console_internal_ip: 172.31.5.83
+console_internal_ip:
 #console_external_ip: 
 
 #Licenser
-licenser_internal_ip: 172.31.6.11
+licenser_internal_ip:
 #licenser_external_ip: 
 
 #Deployer 
-deployer_internal_ip: 172.31.0.240 
+deployer_internal_ip:  
 #deployer_external_ip: 
 
 #Deployment
-deployment_internal_ip:	172.31.5.117 
+deployment_internal_ip: 
 #deployment_external_ip: 
 
 #LABELS
@@ -70,9 +70,17 @@ master_residence_site: 1
 
 available_sites: site1,site2
 
+#Forwarder Variables:
+useAck: true
+
+#Indxer Variables
+polling_rate: 1
+
 #Site Replication Factor
 replication_factor: 2 
 site_replication_factor: origin:1,total:2 
+
+#Search Variables
 
 #Search Factor
 search_factor: 2
@@ -88,4 +96,3 @@ forwarder_listening_port: 9997
 # Default Splunk Application User and Password at Install
 splkuser: admin
 splkpass: password
-

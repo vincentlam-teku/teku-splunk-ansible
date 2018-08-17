@@ -1,0 +1,14 @@
+[general]
+site = site<site_count>
+
+[clustering]
+mode=searchhead
+master_uri = https://<master>:<splunkd_port>
+pass4SymmKey = <idxcluster_secret>
+
+[replication_port://<shc_rep_port>]
+
+[shclustering]
+shcluster_label = <shcluster_label>
+pass4SymmKey = <shcluster_secret>
+conf_deploy_fetch_url = <deployer>:<splunkd_port>
