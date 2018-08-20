@@ -97,7 +97,7 @@
 
 - name: Configure MultiSite Status
   replace:
-    path: "/opt/splunk/etc/apps/org_cm_base/local/server.con.multi_site"
+    path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf.multi_site"
     regexp: '<multisite_status>'
     replace: "{{ multisite_status }}"
     backup: no

@@ -100,7 +100,7 @@ forwarder_uni
 forwarder_heavy
 
 [site1]
-172.31.7.53 #Master
+#172.31.7.53 #Master
 172.31.12.181 #Indexer
 172.31.1.33 #Search
 172.31.10.35 #Monitor

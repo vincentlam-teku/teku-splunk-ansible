@@ -28,23 +28,6 @@
 - name: Copy base configs to app path
   shell: cp -a "/var/tmp/base_configs/org_all_deployer_base" /opt/splunk/etc/apps/
 
-- name: Configure Splunk as Deployer
-  copy: src=server.conf dest=/opt/splunk/etc/apps/org_all_deployer_base/ owner=splunk group=splunk mode=0755
-
-- name: Edit server cluster config for search head secret pass4symm value
-  replace:
-    path: "/opt/splunk/etc/apps/org_all_deployer_base/server.conf"
-    regexp: '<shcluster_secret>'
-    replace: "{{ shcluster_secret }}"
-    backup: no
-
-- name: Edit server cluster config for search head cluster label
-  replace:
-    path: "/opt/splunk/etc/apps/org_all_deployer_base/server.conf"
-    regexp: '<shcluster_lable>'
-    replace: "{{ shcluster_label }}"
-    backup: no
-
 - name: Fix 'app' permissions
   file: path=/opt/splunk/etc/apps owner=splunk group=splunk mode=0755 state=directory recurse=yes
 

@@ -27,7 +27,7 @@
 # Copy Search Head Configs for Single Site and Multi Site
 
 - name: Push Conf Files Splunk Server to join Index Cluster and be a Search Head Cluster Member by Copying server.conf 
-  copy: src=server.conf dest=/opt/splunk/etc/apps/org_all_search_base/server.conf.multi_site owner=splunk group=splunk mode=0755
+  copy: src=server.conf dest=/opt/splunk/etc/apps/org_all_search_base/server.conf owner=splunk group=splunk mode=0755
 
 - name: Push Conf Files Splunk Server to join Index Cluster and be a Search Head Cluster Member by Copying server.conf 
   copy: src=server.conf.multi_site dest=/opt/splunk/etc/apps/org_all_search_base/server.conf.multi_site owner=splunk group=splunk mode=0755
