@@ -5,42 +5,53 @@
 #
 [master]
 #127.0.0.1
-
+172.31.7.53
 # servers that are meant to be license masters, will also have the common config applied.
+
 [licenser]
 #127.0.0.1
+172.31.6.163
 
 # servers that are meant to be splunk search head deployers, will also have the common config applied
 #
 [deployer]
 #127.0.0.1
+172.31.9.188
 
 # servers that are meant to be splunk deployment servers, will also have the common config applied
 #
 [deployment]
 #127.0.0.1
+172.31.4.175
 
 # servers that are meant to be splunk splunk monitoring consoles, will also have the common config applied
 #
 [monitor]
 #127.0.0.1
+172.31.10.35
 
 # servers that are meant to be indexers, will also have the common config applied.
 #
 [indexer]
 #127.0.0.1
+172.31.12.181
+172.31.0.36
 
 # servers that are meant to be splunk search heads, will also have the common config applied.
 #
 [search]
 #127.0.0.1
+172.31.1.33
+172.31.15.196
 
 # servers that are meant to be splunk heavy forwarders, will also have the common config applied
 #
 [forwarder_heavy]
 #127.0.0.1
+172.31.0.8
 
 # servers that are meant to be splunk universal forwarders, will also have the common config applied
 #
 [forwarder_uni]
 #127.0.0.1
+172.31.3.142
