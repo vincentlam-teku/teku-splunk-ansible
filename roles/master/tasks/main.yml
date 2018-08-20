@@ -40,7 +40,7 @@
   copy: src=server.conf dest=/opt/splunk/etc/apps/org_cm_base/local/server.conf owner=splunk group=splunk mode=0755
 
 - name: Push Configure Files for Splunk Cluster Master - Multi Site
-  copy: src=server.conf.mutli_site dest=/opt/splunk/etc/apps/org_cm_base/local/server.conf.multi_site owner=splunk group=splunk mode=0755
+  copy: src=server.conf.multi_site dest=/opt/splunk/etc/apps/org_cm_base/local/server.conf.multi_site owner=splunk group=splunk mode=0755
 
 # Single Site Configuration
 
@@ -97,7 +97,7 @@
 
 - name: Configure MultiSite Status
   replace:
-    path: "/opt/splunk/etc/apps/org_cm_base/local/server.con.multi_sitef"
+    path: "/opt/splunk/etc/apps/org_cm_base/local/server.con.multi_site"
     regexp: '<multisite_status>'
     replace: "{{ multisite_status }}"
     backup: no

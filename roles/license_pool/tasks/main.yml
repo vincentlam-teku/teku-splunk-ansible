@@ -4,6 +4,6 @@
   command: /opt/splunk/bin/splunk edit license-localslave -master_uri https://{{ licenser }}:{{ splunkd_port }}
 
 - name: Restart Splunk
-   shell: /opt/splunk/bin/splunk restart
-   become: yes
-   become_user: splunk
+  shell: /opt/splunk/bin/splunk restart
+  become: yes
+  become_user: splunk

@@ -1,4 +1,12 @@
+---
+#
+
 - name: Configure splunk as search cluster member
   shell: /opt/splunk/bin/splunk init shcluster-config -auth {{ splkuser }}:{{ splkpass }} -mgmt_uri https://{{ master_internal_ip }}:{{ splunkd_port }} -replication_port {{ shc_rep_port }} -replication_factor {{ replication_factor }} -conf_deploy_fetch_url https://{{ deployer_internal_ip }}:{{ splunkd_port }} -secret {{ shcluster_secret }} -shcluster_label {{ shcluster_label }}
+  become: yes
+  become_user: splunk
+
+- name: Restart Splunk
+  shell: /opt/splunk/bin/splunk restart 
   become: yes
   become_user: splunk

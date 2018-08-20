@@ -6,8 +6,12 @@
 [master]
 #127.0.0.1
 172.31.7.53
-# servers that are meant to be license masters, will also have the common config applied.
 
+[master:vars]
+cluster_mode=master
+
+# servers that are meant to be license masters, will also have the common config applied.
+#
 [licenser]
 #127.0.0.1
 172.31.6.163
@@ -30,6 +34,9 @@
 #127.0.0.1
 172.31.10.35
 
+[monitor:vars]
+cluster_mode=searchhead
+
 # servers that are meant to be indexers, will also have the common config applied.
 #
 [indexer]
@@ -44,6 +51,9 @@
 172.31.1.33
 172.31.15.196
 
+[search:vars]
+cluster_mode=searchhead
+
 # servers that are meant to be splunk heavy forwarders, will also have the common config applied
 #
 [forwarder_heavy]
@@ -54,37 +64,53 @@
 #
 [forwarder_uni]
 #127.0.0.1
-172.31.3.142
+#172.31.3.142
 
-[utility:children]
+[common:children]
 master
 licenser
 deployer
 deployment
 monitor
+indexer
+search
+forwarder_heavy
+
+[license_slaves:children]
+master
+deployer
+deployment
+monitor
+indexer
+search
+forwarder_heavy
+forwarder_uni
 
 [indexer_cluster:children]
 indexer
 
+[indexer_cluster:vars]
+cluster_mode=slave
+
 [search_head_cluster:children]
 search
 
-forwarders:children]
+[forwarders:children]
 forwarder_uni
 forwarder_heavy
 
-[site1:children]
-master
-indexer[0]
-search[0]
+[site1]
+172.31.7.53 #Master
+172.31.12.181 #Indexer
+172.31.1.33 #Search
+172.31.10.35 #Monitor
 
 [site1:vars]
 site_count=1
 
-[site2:childen]
-indexer[1]
-search[1]
+[site2]
+172.31.0.36 #Indexer
+172.31.15.196 #Search 
 
 [site2:vars]
 site_count=2
-

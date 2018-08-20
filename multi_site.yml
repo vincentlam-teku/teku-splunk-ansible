@@ -13,15 +13,15 @@
 #Install via Splunk Binary
 
 #All Roles Except for Universal Forwarder
-- hosts: !forwarder_uni 
+- hosts: common
   
   roles:
    - common
 
-- hosts: forwarder_uni
+#- hosts: forwarder_uni
 
-  roles:
-   - forwarder_uni
+#  roles:
+#   - forwarder_uni
 
 #Configure Utility Servers 
 
@@ -57,14 +57,14 @@
   roles:
    - search 
 
-#Configure Forwarder Hosts as Splunk Forwarders
-- hosts: forwarder
-
-  roles:
-   - forwarders
+##Configure Forwarder Hosts as Splunk Forwarders
+#- hosts: forwarders
+#
+#  roles:
+#   - forwarders
 
 #Configure all Hosts as License Slaves 
-- hosts: !licenser
+- hosts: license_slaves
 
   roles:
    - license_pool
@@ -76,9 +76,6 @@
 
   roles:
    - config_cluster_master
-   
-# Configure Peer Nodes - Indexers 
-- hosts: index_cluster
 
 # Configure Site 1 
 

@@ -5,12 +5,12 @@
   shell: find /opt/splunk/etc/apps -type f -name '._*' -delete && find /opt/splunk/etc/apps -type f -name '*.conf.*' -delete && find /opt/splunk/etc/apps -type f -name '.DS_Store' -delete
   ignore_errors: yes
 
-- name: Splunk Clean All Data
-  command: /opt/splunk/bin/splunk clean globaldata -f 
-  ignore_errors: yes
-
 - name: Stop Splunk
   command: /opt/splunk/bin/splunk stop --accept-license --answer-yes --no-prompt
+  ignore_errors: yes
+
+- name: Splunk Clean All Data
+  command: /opt/splunk/bin/splunk clean globaldata -f 
   ignore_errors: yes
 
 - name: Disable Splunk Boot-Start

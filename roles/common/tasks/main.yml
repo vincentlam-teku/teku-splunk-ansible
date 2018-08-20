@@ -22,7 +22,7 @@
 - name: Install Splunk Enterprise package
   unarchive: 
    src: /opt/{{splunk_enterprise}} 
-   dest: /opt 
+   dest: /opt/ 
 
 - name: Add Splunk Service User   
   command: sudo useradd -m -r splunk 
