@@ -5,14 +5,15 @@
   command: mkdir /opt/splunk/licenses 
   ignore_errors: yes
 
+- name: Copy license to license folder
+  copy: src=splunk.lic dest=/opt/splunk/licenses
 
+- name: Add LIcnese to License Master
+  command: /opt/splunk/bin/splunk add licenses /opt/splunk/licenseses/splunk.lic
+  become: yes
+  become_user: splunk
+  ignore_errors: yes
 
-- name: Install license key
- # shell: /opt/splunk/bin/splunk add licenses splunk.lic"
- # become: yes
- # become_user: splunk
- # ignore_errors: yes
-
-#- name: Restart Splunk
-#  command: /opt/splunk/bin/splunk restart --answer-yes
+- name: Restart Splunk
+  command: /opt/splunk/bin/splunk restart --answer-yes
 

@@ -1,0 +1,4 @@
+- name: Configure splunk cluster master
+  shell: /opt/splunk/bin/splunk edit cluster-config -mode master -multisite {{ multisite_status }} -replication_factor {{ replication_factor }} -available_sites {{ available_sites }} -site {{ site_count }} -site_replication_factor {{ site_replication_factor }} -site_search_factor {{ site_search_factor }}  -auth {{ splkuser }}:{{ splkpass }}
+  become: yes
+  become_user: splunk

@@ -1,0 +1,7 @@
+- name: Configure Forwarders 
+  hosts: forwarders
+  remote_user: centos
+  become: yes
+
+  roles:
+    - forwarders

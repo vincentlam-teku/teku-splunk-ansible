@@ -18,6 +18,11 @@
   roles:
    - common
 
+- hosts: forwarder_uni
+
+  roles:
+   - forwarder_uni
+
 #Configure Utility Servers 
 
 - hosts: licenser
@@ -53,30 +58,41 @@
    - search 
 
 #Configure Forwarder Hosts as Splunk Forwarders
-- hosts: forwarder_heavy
+- hosts: forwarder
 
   roles:
-   - forwarder_heavy
-
-- hosts: forwarder_uni
-
-  roles:
-   - forwarder_uni
+   - forwarders
 
 #Configure all Hosts as License Slaves 
-- hosts: all
+- hosts: !licenser
 
   roles:
    - license_pool
 
 #Configure Clustering
 
-	# Configure Master
+# Configure Master
+- hosts: master
 
-	# Configure Peer Nodes - Indexers 
+  roles:
+   - config_cluster_master
+   
+# Configure Peer Nodes - Indexers 
+- hosts: index_cluster
 
-	# Configure Search Heads to join Cluster 
+# Configure Site 1 
 
+- hosts: site1
 
- 
+  roles:
+   - config_index_cluster
+   - config_search_cluster
+
+# Configure Site 2 
+
+- hosts: site2
+
+  roles:
+   - config_index_cluster
+   - config_search_cluster
 

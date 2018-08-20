@@ -1,0 +1,7 @@
+- name: Configure Search Head Cluster
+  hosts: search_cluster
+  remote_user: centos
+  become: yes
+
+  roles:
+    - search_cluster

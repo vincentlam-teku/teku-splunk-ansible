@@ -160,3 +160,4 @@
   shell: /opt/splunk/bin/splunk restart
   become: yes
   become_user: splunk
+

@@ -1,7 +1,7 @@
 - name: Configure Splunk Instances as License Slaves
   vars: 
-    description: 'Configure Splunk Instances as License Slaves and then restart them.'
-  hosts: all
+    description: 'Configure Splunk Instances as License Slaves'
+  hosts: !licenser
   remote_user: centos
   become: yes
 
