@@ -44,6 +44,9 @@
 #- name: Copy Deployment Client Configs from 
 #  copy: src=deploymentclient.conf dest=/opt/splunk/etc/system/local/ owner=splunk group=splunk mode=0755
 
+- name: Fix 'app' permissions
+  file: path=/opt/splunk/etc/apps owner=splunk group=splunk mode=0755 state=directory recurse=yes
+
 - name: Start Splunk
   shell: /opt/splunk/bin/splunk start --answer-yes
   become: yes

@@ -21,23 +21,23 @@ label: teku
 #UTILITIES
 
 #Master
-master_internal_ip: 172.31.7.53  
+master_internal_ip: 172.31.0.208  
 #master_external_ip: 
 
 #Console
-console_internal_ip: 172.31.10.35
+console_internal_ip: 172.31.10.136
 #console_external_ip: 
 
 #Licenser
-licenser_internal_ip: 172.31.6.163
+licenser_internal_ip: 172.31.11.114
 #licenser_external_ip: 
 
 #Deployer 
-deployer_internal_ip: 172.31.9.188 
+deployer_internal_ip: 172.31.1.103 
 #deployer_external_ip: 
 
 #Deployment
-deployment_internal_ip: 172.31.4.175
+deployment_internal_ip: 172.31.4.36
 #deployment_external_ip: 
 
 #LABELS

@@ -1,0 +1,7 @@
+- name: Configure Search heads to join an index cluster
+  hosts: search
+  remote_user: centos
+  become: yes
+
+  roles:
+    - add_searchhead_to_index_cluster

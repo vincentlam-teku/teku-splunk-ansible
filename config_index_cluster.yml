@@ -1,8 +1,7 @@
 - name: Configure Indexers to be an index cluster
-  hosts: index_cluster
+  hosts: indexer_cluster
   remote_user: centos
   become: yes
 
   roles:
-    - index_cluster
-    - search #Add the search heads to the index Cluster
+    - config_index_cluster

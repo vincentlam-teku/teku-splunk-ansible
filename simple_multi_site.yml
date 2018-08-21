@@ -55,19 +55,24 @@
   roles:
    - config_cluster_master
 
-# Configure Site 1 
+# Configure Index Cluster 
 
-- hosts: site1
-
-  roles:
-   - config_index_cluster
-   - config_search_cluster
-
-# Configure Site 2 
-
-- hosts: site2
+- hosts: indexer_cluster
 
   roles:
    - config_index_cluster
+
+# Configure Index Cluster 
+
+- hosts: search
+
+  roles:
+   - add_searchhead_to_index_cluster
+
+# Configure Search Head Cluster 
+
+- hosts: search
+
+  roles:
    - config_search_cluster
 

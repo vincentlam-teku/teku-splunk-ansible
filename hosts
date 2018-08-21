@@ -41,15 +41,18 @@ cluster_mode=searchhead
 #
 [indexer]
 #127.0.0.1
-172.31.6.54
-172.31.8.5
+172.31.6.54 site_count=1
+172.31.8.5 site_count=2
+
+[indexer:vars]
+cluster_mode=slave
 
 # servers that are meant to be splunk search heads, will also have the common config applied.
 #
 [search]
 #127.0.0.1
-172.31.8.185
-172.31.8.215
+172.31.8.185 site_count=1
+172.31.8.215 site_count=2
 
 [search:vars]
 cluster_mode=searchhead
@@ -65,6 +68,21 @@ cluster_mode=searchhead
 [forwarder_uni]
 #127.0.0.1
 172.31.13.170
+
+[site1]
+172.31.6.54#Indexer
+172.31.8.185#Search
+#172.31.10.136#Monitor
+
+[site1:vars]
+site_count=1
+
+[site2]
+172.31.8.5#Indexer
+172.31.8.215#Search 
+
+[site2:vars]
+site_count=2
 
 [common:children]
 master
@@ -95,21 +113,9 @@ cluster_mode=slave
 [search_head_cluster:children]
 search
 
+[search_head_cluster:vars]
+cluster_mode=searchhead
+
 [forwarders:children]
 forwarder_uni
 forwarder_heavy
-
-[site1]
-172.31.6.54#Indexer
-172.31.8.185#Search
-#172.31.10.136#Monitor
-
-[site1:vars]
-site_count=1
-
-[site2]
-172.31.8.5#Indexer
-172.31.8.215#Search 
-
-[site2:vars]
-site_count=2
