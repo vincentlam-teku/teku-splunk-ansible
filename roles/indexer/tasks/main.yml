@@ -7,7 +7,7 @@
   copy: src={{ deploypackages }}{{ base_configs }} dest=/var/tmp owner=splunk group=splunk mode=0755
 
 - name: Copy base configs to app path
-  shell: cp -a "/var/tmp/base_configs/org_all_indexer_base" /opt/splunk/etc/apps/ owner=splunk group=splunk mode=0755
+  copy: src=/var/tmp/base_configs/org_all_indexer_base dest=/opt/splunk/etc/apps owner=splunk group=splunk mode=0755
 
 #Copy Conf Files for Single Site and Multi Site
 
@@ -48,14 +48,14 @@
     backup: yes
 
 # Write Configurations for Multi Site Server Config File
-- name: Configure Site ID
-  replace:
-    path: "/opt/splunk/etc/apps/org_all_indexer_base/server.conf.multi_site"
-    regexp: '<site_count>'
-    replace: "{{ site_count | int -1 }}"
-    register: site_count
-    when: site_count.stdout != 0
-    backup: yes
+#- name: Configure Site ID
+#  replace:
+#    path: "/opt/splunk/etc/apps/org_all_indexer_base/server.conf.multi_site"
+#    regexp: '<site_count>'
+#    replace: "{{ site_count | int -1 }}"
+#    when: site_count.stdout != 0
+#    backup: yes
+#    ignore_errors: yes
 
 - name: Configure Master URI
   replace:

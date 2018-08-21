@@ -2,9 +2,10 @@
 #
 
 - name: Configure splunk cluster master
-  shell: /opt/splunk/bin/splunk edit cluster-config -mode {{ cluster_mode }} -multisite {{ multisite_status }} -replication_factor {{ replication_factor }} -available_sites {{ available_sites }} -site {{ master_residence_site }} -site_replication_factor {{ site_replication_factor }} -site_search_factor {{ site_search_factor }} -auth {{ splkuser }}:{{ splkpass }}
+  command: /opt/splunk/bin/splunk edit cluster-config -mode {{ cluster_mode }} -multisite {{ multisite_status }} -available_sites {{ available_sites }} -site {{ master_residence_site }} -site_replication_factor {{ site_replication_factor }} -site_search_factor {{ site_search_factor }} -auth {{ splkuser }}:{{ splkpass }}
   become: yes
   become_user: splunk
+  ignore_errors: yes
 
 - name: Restart Splunk
   shell: /opt/splunk/bin/splunk restart

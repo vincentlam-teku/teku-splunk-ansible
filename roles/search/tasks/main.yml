@@ -78,14 +78,15 @@
 
 # Configs for Multi Site
 
-- name: Configure Site ID
-  replace:
-    path: "/opt/splunk/etc/apps/org_all_search_base/server.conf.multi_site"
-    regexp: '<site_count>'
-    replace: "{{ site_count | int - 1 }}"
-    register: site_count
-    when: site_count.stdout != 0
-    backup: yes
+#- name: Configure Site ID
+#  replace:
+#    path: "/opt/splunk/etc/apps/org_all_search_base/server.conf.multi_site"
+#    regexp: '<site_count>'
+#    replace: "{{ site_count | int - 1 }}"
+#    register: site_count
+#    when: site_count.stdout != 0
+#    backup: yes
+#    ignore_errors: yes
 
 - name: Configure Master URI
   replace:

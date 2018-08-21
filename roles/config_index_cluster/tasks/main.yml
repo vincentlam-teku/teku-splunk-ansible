@@ -5,6 +5,7 @@
   shell: /opt/splunk/bin/splunk edit cluster-config -master_uri https://{{ master_internal_ip }}:{{ splunkd_port }} -mode {{ cluster_mode }} -multisite {{ multisite_status }} -site {{site_count}} -replication_port {{ idx_rep_port }} -secret {{ idxcluster_secret }} -auth {{ splkuser }}:{{ splkpass }}
   become: yes
   become_user: splunk
+  ignore_errors: yes
 
 - name: Restart Splunk
   shell: /opt/splunk/bin/splunk restart

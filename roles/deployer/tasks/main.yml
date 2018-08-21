@@ -25,9 +25,6 @@
 - name: Copy base configs to app path
   shell: cp -a "/var/tmp/base_configs/org_all_core_outputs" /opt/splunk/etc/apps/
 
-- name: Copy base configs to app path
-  shell: cp -a "/var/tmp/base_configs/org_all_deployer_base" /opt/splunk/etc/apps/
-
 - name: Fix 'app' permissions
   file: path=/opt/splunk/etc/apps owner=splunk group=splunk mode=0755 state=directory recurse=yes
 
