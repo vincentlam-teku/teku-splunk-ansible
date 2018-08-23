@@ -1,0 +1,82 @@
+#Configure Desired Hosts for Deployment and link to related dependencies below:
+
+#Multi Site
+
+
+#Install Splunk Enterprise on All Hosts and Configure them for Best Practices
+
+#Set Open File Limit for Splunk
+#Set Max Processes Limit
+#Set Core File Size
+#Copy Disable Transparent Huge Page File and Disable Transparent Huge Page File via Chkconfig
+#Download Splunk Binary via Wget 
+#Install via Splunk Binary
+
+#All Roles Except for Universal Forwarder
+- hosts: common
+  
+  roles:
+   - common
+
+#Configure Utility Servers 
+
+- hosts: master
+
+  roles:
+   - master
+
+- hosts: deployer
+
+  roles:
+   - deployer 
+
+- hosts: deployment
+
+  roles:
+   - deployment
+  
+#Configure Indexer Hosts as Splunk Indexers 
+- hosts: indexer
+
+  roles:
+   - indexer
+
+#Configure Search Hosts as Splunk Search Heads
+- hosts: search
+
+  roles:
+   - search 
+
+#Configure Clustering
+
+# Configure Master
+- hosts: master
+
+  roles:
+   - config_cluster_master
+
+# Configure Index Cluster 
+
+- hosts: indexer_cluster
+
+  roles:
+   - config_index_cluster
+
+# Add SearchHead to Index Cluster 
+
+- hosts: search
+
+  roles:
+   - add_searchhead_to_index_cluster
+
+# Add Monitor to Index Cluster
+
+- hosts: add 
+
+# Configure Search Head Cluster 
+
+- hosts: search
+
+  roles:
+   - config_search_cluster
+

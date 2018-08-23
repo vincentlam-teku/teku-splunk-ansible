@@ -1,0 +1,8 @@
+- name: Install and configure License Master
+  hosts: licenser
+  remote_user: centos
+  become: yes
+
+  roles:
+    - common
+    - licenser

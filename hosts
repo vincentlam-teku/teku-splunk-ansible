@@ -1,0 +1,121 @@
+#===========INVENTORY===========
+# Here you would define each host and their catergory for deployment
+
+# servers that are meant to be cluster masters, will also have the common config applied.
+#
+[master]
+#127.0.0.1
+172.31.0.208
+
+[master:vars]
+cluster_mode=master
+
+# servers that are meant to be license masters, will also have the common config applied.
+#
+[licenser]
+#127.0.0.1
+172.31.11.114
+
+# servers that are meant to be splunk search head deployers, will also have the common config applied
+#
+[deployer]
+#127.0.0.1
+172.31.1.103
+
+# servers that are meant to be splunk deployment servers, will also have the common config applied
+#
+[deployment]
+#127.0.0.1
+172.31.4.36
+
+# servers that are meant to be splunk splunk monitoring consoles, will also have the common config applied
+#
+[monitor]
+#127.0.0.1
+172.31.10.136 site_count=1
+
+[monitor:vars]
+cluster_mode=searchhead
+
+# servers that are meant to be indexers, will also have the common config applied.
+#
+[indexer]
+#127.0.0.1
+172.31.6.54 site_count=1
+172.31.8.5 site_count=2
+
+[indexer:vars]
+cluster_mode=slave
+
+# servers that are meant to be splunk search heads, will also have the common config applied.
+#
+[search]
+#127.0.0.1
+172.31.8.185 site_count=1
+172.31.8.215 site_count=2
+
+[search:vars]
+cluster_mode=searchhead
+
+# servers that are meant to be splunk heavy forwarders, will also have the common config applied
+#
+[forwarder_heavy]
+#127.0.0.1
+172.31.12.5
+
+# servers that are meant to be splunk universal forwarders, will also have the common config applied
+#
+[forwarder_uni]
+#127.0.0.1
+172.31.13.170
+
+[site1]
+172.31.6.54#Indexer
+172.31.8.185#Search
+172.31.10.136#Monitor
+
+[site1:vars]
+site_count=1
+
+[site2]
+172.31.8.5#Indexer
+172.31.8.215#Search 
+
+[site2:vars]
+site_count=2
+
+[common:children]
+master
+#licenser
+deployer
+deployment
+#monitor
+indexer
+search
+forwarder_heavy
+
+[license_slaves:children]
+master
+deployer
+deployment
+monitor
+indexer
+search
+forwarder_heavy
+forwarder_uni
+
+[indexer_cluster:children]
+indexer
+
+[indexer_cluster:vars]
+cluster_mode=slave
+
+[search_head_cluster:children]
+search
+
+[search_head_cluster:vars]
+cluster_mode=searchhead
+
+[forwarders:children]
+forwarder_uni
+forwarder_heavy

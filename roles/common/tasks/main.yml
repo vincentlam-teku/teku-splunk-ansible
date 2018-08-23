@@ -2,37 +2,123 @@
 # This playbook contains common plays that will be run on all nodes.
 #
 - name: Set open files limit for splunk
-  copy: src=20-nofile.conf dest=/etc/security/limits.d/ owner=root group=root mode=0644
+  copy: src=20-nofile.conf dest=/etc/security/limits.d/ owner=root group=root mode=0755
+  tags: best_practice
 
 - name: Set max processes limit
-  copy: src=20-nproc.conf dest=/etc/security/limits.d/ owner=root group=root mode=0644
+  copy: src=20-nproc.conf dest=/etc/security/limits.d/ owner=root group=root mode=0755
+  tags: best_practice
 
 - name: Set core file size
-  copy: src=20-core.conf dest=/etc/security/limits.d/ owner=root group=root mode=0644
+  copy: src=20-core.conf dest=/etc/security/limits.d/ owner=root group=root mode=0755
+  tags: best_practice
 
 - name: Copy Disable THP File
   copy: src=disable-thp dest=/etc/init.d/ owner=root group=root mode=0755
+  tags: best_practice
+  
+- name: Disable Transparent Huge Page
+  shell: sudo chkconfig --add disable-thp
+  tags: best_practice  
 
-- name: Disable THP
-  shell: chkconfig --add disable-thp
+- name: add splunk group
+  tags:
+   - install
+  group: name=splunk state=present
+
+- name: Add Splunk Service User   
+  user: name=splunk comment="Splunk Service User" shell=/usr/sbin/nologin groups=splunk createhome=no 
+  ignore_errors: yes
+
+- name: make /opt writetable by splunk
+  tags:
+   - install
+  file: path=/opt mode=777
+
+- name: Create /home/splunk/.splunk for storing temporary
+  tags:
+   - neccessary
+  file: 
+   path: /home/splunk/.splunk
+   owner: splunk
+   group: splunk
+   mode: 0755
+   recurse: yes  
+
+- name: checking if splunk is install
+  tags: install
+  stat: path=/opt/splunk
+  register: splunk_path
+
+- name: is splunk installed? 
+  tags: install
+  debug: msg='splunk is already installed under /opt/splunk'
+  when: splunk_path.stat.exists
+
+- name: checking if splunk install binary is present
+  tags: install
+  stat: path=/var/tmp/{{splunk_enterprise}}
+  register: splunk_install_binary
+
+- name: is splunk install binary present
+  tags: install
+  debug: msg='splunk install binary is present no need to download'
+  when: splunk_install_binary.stat.exists
 
 - name: Download Splunk
-  get_url: url={{ wget_url }} dest=/var/tmp/ owner=root group=root mode=0644
+  get_url: url={{ wget_url_splunk_enterprise }} dest=/var/tmp/ owner=root group=root mode=0755
+  when: splunk_install_binary.stat.exists == false
+
+#- name: Install Splunk Enterprise Package via RPM
+#  yum: 
+#   name: /var/tmp/{{ splunk_enterprise }} 
+#   state: present
+#  async: 45
+#  poll: 5  
 
 - name: Install Splunk Enterprise package
-  yum:
-    name: /var/tmp/{{ enterprise }}
-    state: installed
-
-- name: Configure boot-start with splunk user
-  shell: /opt/splunk/bin/splunk enable boot-start -user splunk --accept-license
-
-- name: Start Splunk
-  shell: /opt/splunk/bin/splunk start
+  unarchive: src=/var/tmp/{{splunk_enterprise}} dest=/opt/ owner=splunk group=splunk creates=yes
   become: yes
   become_user: splunk
+  when: splunk_path.stat.exists == false
 
-- name: Reset admin password
-  shell: /opt/splunk/bin/splunk edit user admin -password SPLKp@ss! -role admin -auth admin:changeme
+- name: Copy User-Seed  
+  copy: src=user-seed.conf dest=/opt/splunk/etc/system/local/ owner=splunk group=splunk mode=0755
+  become: yes
+  become_user: splunk 
+
+- name: accept license and start splunk
+  tags:
+   - install
+  shell: /opt/splunk/bin/splunk start --accept-license --answer-yes --no-prompt
   become: yes
   become_user: splunk
+  when: splunk_path.stat.exists == false
+  register: install_splunk_result
+ 
+- name: touch ui so it does not ask for the password to be changed
+  tags:
+   - install
+  shell: touch /opt/splunk/etc/.ui_login
+  sudo: yes
+  sudo_user: splunk
+  when: splunk_path.stat.exists == false
+ 
+- name: Configure boot-start with Splunk user
+  shell: /opt/splunk/bin/splunk enable boot-start -user splunk --accept-license --answer-yes --no-prompt
+  async: 45
+#  become: yes
+#  become_user: splunk
+  #when: install_splunk_result is succeeded
+  register: config_boot_start_result
+
+#- name: Copy Deployment Client Configs from 
+#  copy: src=deploymentclient.conf dest=/opt/splunk/etc/system/local/ owner=splunk group=splunk mode=0755
+
+- name: Restart Splunk
+  shell: /opt/splunk/bin/splunk restart --answer-yes
+  become: yes
+  become_user: splunk
+#  async: 45
+#  #when: install_splunk_result is succeeded 
+

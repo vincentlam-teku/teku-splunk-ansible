@@ -1,0 +1,7 @@
+- name: Configure Search heads to join an index cluster
+  hosts: monitor
+  remote_user: centos
+  become: yes
+
+  roles:
+    - add_monitor_to_index_cluster

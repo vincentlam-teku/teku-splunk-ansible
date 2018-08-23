@@ -4,22 +4,93 @@
 # please contact Teku Professional Services @ www.tekugroup.net
 
 - name: Copy base configs
-  unarchive: src={{ deploypackages }}{{ base_configs }} dest=/var/tmp owner=splunk group=splunk mode=0755
+  copy: src={{ deploypackages }}{{ base_configs }} dest=/var/tmp owner=splunk group=splunk mode=0755
 
-- name: Copy idx role configs to app path
-  shell: cp -a "/var/tmp/Configurations-Base/{{ org }}_idx_base" /opt/splunk/etc/apps/
+- name: Copy base configs to app path
+  copy: src=/var/tmp/base_configs/org_all_indexer_base dest=/opt/splunk/etc/apps owner=splunk group=splunk mode=0755
+
+#Copy Conf Files for Single Site and Multi Site
+
+- name: Configure Splunk Search Peer for Single Site
+  copy: src=server.conf dest=/opt/splunk/etc/apps/org_all_indexer_base/server.conf owner=splunk group=splunk mode=0755
+
+- name: Configure Splunk Search Peer for Multi Site
+  copy: src=server.conf.multi_site dest=/opt/splunk/etc/apps/org_all_indexer_base/server.conf.multi_site owner=splunk group=splunk mode=0755
+
+# Write Configurations for Single Site Server Config File
+
+- name: Configure Master URI
+  replace:
+    path: "/opt/splunk/etc/apps/org_all_indexer_base/server.conf"
+    regexp: '<master>'
+    replace: "{{ master_internal_ip }}"
+    backup: yes
+
+- name: Configure Master Port
+  replace:
+    path: "/opt/splunk/etc/apps/org_all_indexer_base/server.conf"
+    regexp: '<splunkd_port>'
+    replace: "{{ splunkd_port }}"
+    backup: yes
+
+- name: Edit server cluster config for index cluster pass4Symm value
+  replace:
+    path: "/opt/splunk/etc/apps/org_all_indexer_base/server.conf"
+    regexp: '<idxcluster_secret>'
+    replace: "{{ idxcluster_secret }}"
+    backup: yes
+
+- name: Configure Replication Port
+  replace:
+    path: "/opt/splunk/etc/apps/org_all_indexer_base/server.conf"
+    regexp: '<idx_rep_port>'
+    replace: "{{ idx_rep_port }}"
+    backup: yes
+
+# Write Configurations for Multi Site Server Config File
+#- name: Configure Site ID
+#  replace:
+#    path: "/opt/splunk/etc/apps/org_all_indexer_base/server.conf.multi_site"
+#    regexp: '<site_count>'
+#    replace: "{{ site_count | int -1 }}"
+#    when: site_count.stdout != 0
+#    backup: yes
+#    ignore_errors: yes
+
+- name: Configure Master URI
+  replace:
+    path: "/opt/splunk/etc/apps/org_all_indexer_base/server.conf.multi_site"
+    regexp: '<master>'
+    replace: "{{ master_internal_ip }}"
+    backup: yes
+
+- name: Configure Master Port
+  replace:
+    path: "/opt/splunk/etc/apps/org_all_indexer_base/server.conf.multi_site"
+    regexp: '<splunkd_port>'
+    replace: "{{ splunkd_port }}"
+    backup: yes
+
+- name: Edit server cluster config for index cluster pass4Symm value
+  replace:
+    path: "/opt/splunk/etc/apps/org_all_indexer_base/server.conf.multi_site"
+    regexp: '<idxcluster_secret>'
+    replace: "{{ idxcluster_secret }}"
+    backup: yes
+
+- name: Configure Replication Port
+  replace:
+    path: "/opt/splunk/etc/apps/org_all_indexer_base/server.conf.multi_site"
+    regexp: '<idx_rep_port>'
+    replace: "{{ idx_rep_port }}"
+    backup: yes
+
+# Enable New Configurations to propagate
 
 - name: Restart Splunk
   shell: /opt/splunk/bin/splunk restart
   become: yes
   become_user: splunk
+#  async: 45
+#  poll: 0
 
-- name: Configure splunk cluster slave
-  shell: /opt/splunk/bin/splunk edit cluster-config -master_uri https://{{ master_internal_ip }}:8089 -mode {{ peermode }} -replication_port {{ idx_rep_port }} -secret {{ idxcluster_secret }} -auth admin:changeme
-  become: yes
-  become_user: splunk
-
-- name: Restart Splunk
-  shell: /opt/splunk/bin/splunk restart
-  become: yes
-  become_user: splunk

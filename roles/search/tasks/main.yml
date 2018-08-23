@@ -1,18 +1,150 @@
 ---
 # This playbook will configure Splunk  as a search head cluster member.
 
+- name: Copy base configs
+  copy: src={{ deploypackages }}{{ base_configs }} dest=/var/tmp/ owner=splunk group=splunk mode=0744
 
-- name: Configure splunk to join cluster master node as search head
-  shell: /opt/splunk/bin/splunk edit cluster-config -master_uri https://{{ master_internal_ip }}:8089 -mode {{ membermode }} -secret {{ idxcluster_secret }} -auth admin:changeme
-  become: yes
-  become_user: splunk
+- name: Edit outputs base config master value
+  replace:
+    path: "/var/tmp/base_configs/org_all_core_outputs/local/outputs.conf"
+    regexp: '<master>'
+    replace: "{{ master_internal_ip }}"
+    backup: yes
 
-- name: Configure splunk as search cluster member if standalone is False
-  shell: /opt/splunk/bin/splunk init shcluster-config -auth admin:changeme -mgmt_uri https://"$(hostname -f)":8089 -replication_port {{ shc_rep_port }} -replication_factor 2 -conf_deploy_fetch_url https://{{ deployer_internal_ip }}:8089 -secret {{ shcluster_secret }} -shcluster_label {{ shcluster_label }}
-  become: yes
-  become_user: splunk
+- name: Edit outputs base config secret value
+  replace:
+    path: "/var/tmp/base_configs/org_all_core_outputs/local/outputs.conf"
+    regexp: '<idxdiscovery_secret>'
+    replace: "{{ idxdiscovery_secret }}"
+    backup: yes
+
+- name: Copy base configs to app path
+  shell: cp -a "/var/tmp/base_configs/org_all_core_outputs" /opt/splunk/etc/apps/
+
+- name: Copy base configs to app path
+  shell: cp -a "/var/tmp/base_configs/org_all_search_base" /opt/splunk/etc/apps/
+
+# Copy Search Head Configs for Single Site and Multi Site
+
+- name: Push Conf Files Splunk Server to join Index Cluster and be a Search Head Cluster Member by Copying server.conf 
+  copy: src=server.conf dest=/opt/splunk/etc/apps/org_all_search_base/server.conf owner=splunk group=splunk mode=0755
+
+- name: Push Conf Files Splunk Server to join Index Cluster and be a Search Head Cluster Member by Copying server.conf 
+  copy: src=server.conf.multi_site dest=/opt/splunk/etc/apps/org_all_search_base/server.conf.multi_site owner=splunk group=splunk mode=0755
+
+# Configs for Single Site
+
+- name: Configure Master URI
+  replace:
+    path: "/opt/splunk/etc/apps/org_all_search_base/server.conf"
+    regexp: '<master>'
+    replace: "{{ master_internal_ip }}"
+    backup: yes
+
+- name: Configure Deployer URI
+  replace:
+    path: "/opt/splunk/etc/apps/org_all_search_base/server.conf"
+    regexp: '<deployer>'
+    replace: "{{ deployer_internal_ip }}"
+    backup: yes
+
+- name: Configure Master Port
+  replace:
+    path: "/opt/splunk/etc/apps/org_all_search_base/server.conf"
+    regexp: '<splunkd_port>'
+    replace: "{{ splunkd_port }}"
+    backup: yes
+
+- name: Edit server cluster config for indexer discovery pass4Symm value
+  replace:
+    path: "/opt/splunk/etc/apps/org_all_search_base/server.conf"
+    regexp: '<idxdiscovery_secret>'
+    replace: "{{ idxdiscovery_secret }}"
+    backup: yes
+
+- name: Edit server cluster config for indxer cluster pass4Symm value
+  replace:
+    path: "/opt/splunk/etc/apps/org_all_search_base/server.conf"
+    regexp: '<idxcluster_secret>'
+    replace: "{{ idxcluster_secret }}"
+    backup: yes
+
+- name: Edit server cluster config for search head cluster pass4Symm value
+  replace:
+    path: "/opt/splunk/etc/apps/org_all_search_base/server.conf"
+    regexp: '<shcluster_secret>'
+    replace: "{{ shcluster_secret }}"
+    backup: yes
+
+# Configs for Multi Site
+
+#- name: Configure Site ID
+#  replace:
+#    path: "/opt/splunk/etc/apps/org_all_search_base/server.conf.multi_site"
+#    regexp: '<site_count>'
+#    replace: "{{ site_count | int - 1 }}"
+#    register: site_count
+#    when: site_count.stdout != 0
+#    backup: yes
+#    ignore_errors: yes
+
+- name: Configure Master URI
+  replace:
+    path: "/opt/splunk/etc/apps/org_all_search_base/server.conf.multi_site"
+    regexp: '<master>'
+    replace: "{{ master_internal_ip }}"
+    backup: yes
+
+- name: Configure Deployer URI
+  replace:
+    path: "/opt/splunk/etc/apps/org_all_search_base/server.conf.multi_site"
+    regexp: '<deployer>'
+    replace: "{{ deployer_internal_ip }}"
+    backup: yes
+
+- name: Configure Master Port
+  replace:
+    path: "/opt/splunk/etc/apps/org_all_search_base/server.conf.multi_site"
+    regexp: '<splunkd_port>'
+    replace: "{{ splunkd_port }}"
+    backup: yes
+
+- name: Edit server cluster config for indexer discovery pass4Symm value
+  replace:
+    path: "/opt/splunk/etc/apps/org_all_search_base/server.conf.multi_site"
+    regexp: '<idxdiscovery_secret>'
+    replace: "{{ idxdiscovery_secret }}"
+    backup: yes
+
+- name: Edit server cluster config for indxer cluster pass4Symm value
+  replace:
+    path: "/opt/splunk/etc/apps/org_all_search_base/server.conf.multi_site"
+    regexp: '<idxcluster_secret>'
+    replace: "{{ idxcluster_secret }}"
+    backup: yes
+
+- name: Edit server cluster config for search head cluster pass4Symm value
+  replace:
+    path: "/opt/splunk/etc/apps/org_all_search_base/server.conf.multi_site"
+    regexp: '<shcluster_secret>'
+    replace: "{{ shcluster_secret }}"
+    backup: yes
+
+- name: Configure Server Search Head Cluster Replication Port
+  replace:
+    path: "/opt/splunk/etc/apps/org_all_search_base/server.conf.multi_site"
+    regexp: '<shc_rep_port>'
+    replace: "{{ shc_rep_port }}"
+    backup: yes
+
+#- name: Write Configs and Restart System
+
+#- name: Fix 'app' permissions
+#  file: path=/opt/splunk/etc/apps owner=splunk group=splunk mode=0755 state=directory recurse=yes
 
 - name: Restart Splunk
   shell: /opt/splunk/bin/splunk restart
   become: yes
   become_user: splunk
+#  async: 45
+  

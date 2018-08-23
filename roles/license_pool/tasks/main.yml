@@ -1,0 +1,9 @@
+#Ansible for joining Splunk License Master 
+
+- name: Point Host to License Master and Join License Pool as a License Slave
+  command: /opt/splunk/bin/splunk edit license-localslave -master_uri https://{{ licenser }}:{{ splunkd_port }}
+
+- name: Restart Splunk
+  shell: /opt/splunk/bin/splunk restart
+  become: yes
+  become_user: splunk

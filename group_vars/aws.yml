@@ -1,0 +1,9 @@
+aws_access_key: <enter AWS access key>
+aws_secret_key: <enter AWS secret key>
+key_name: <enter private key file alias name>
+aws_region: <enter AWS region>
+vpc_id: <enter VPC ID>
+ami_id: ami-<ami_id>
+instance_type: <instance_type>
+my_local_cidr_ip: <enter cidr_ip>
+

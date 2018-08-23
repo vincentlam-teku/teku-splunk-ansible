@@ -1,0 +1,22 @@
+---
+# This role contains plays to configure the License Master
+
+- name: Create license folder
+  shell: sudo mkdir /opt/splunk/licenses 
+
+- name: Assign /opt/splunk/licenses to Splunk Service User
+  command: sudo chown -R splunk:splunk /opt/splunk/licenses
+
+- name: Copy license to License folder
+  copy: src=splunk.lic dest=/opt/splunk/licenses/ owner=splunk group=splunk mode=0744
+
+- name: Add Licenese to License Master
+  command: /opt/splunk/bin/splunk add licenses /opt/splunk/licenses/splunk.lic -auth {{ splkuser }}:{{ splkpass }}
+  become: yes
+  become_user: splunk
+  ignore_errors: yes
+
+- name: Restart Splunk
+  command: /opt/splunk/bin/splunk restart --answer-yes
+  become: yes
+  become_user: splunk

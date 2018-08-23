@@ -1,0 +1,33 @@
+---
+# This playbook contains common plays that will be run on forwarder nodes.
+#
+- name: Download Splunk Forwader
+  get_url: url={{wget_url_splunk_forwarder}} dest=/opt/ owner=root group=root mode=0755
+
+- name: Install Splunk Forwarder package
+  command: tar -xvzf /opt/{{splunk_forwarder}} -C /opt 
+
+- name: Add Splunk User   
+  command: sudo useradd -m -r splunk 
+
+- name: Assign Password to Splunk User
+  command: echo 'password' | sudo passwd splunk --stdin 
+
+- name: Assign /opt/splunk to Splunk Service User
+  command: sudo chown -R splunk:splunk /opt/splunkforwarder 
+
+- name: Copy User-Seed
+  copy: src=user-seed.conf dest=/opt/splunkforwarder/etc/system/local/ owner=splunk group=splunk mode=0755
+
+- name: Copy Outputs.conf
+  copy: src=outputs.conf dest=/opt/splunkforwarder/etc/system/local/ owner=splunk group=splunk mode=0755
+
+- name: Configure boot-start with splunk user
+  shell: /opt/splunkforwarder/bin/splunk enable boot-start -user splunk --accept-license --answer-yes
+  ignore_errors: yes  
+ 
+- name: Start Splunk
+  shell: /opt/splunkforwarder/bin/splunk restart
+  become: yes
+  become_user: splunk
+

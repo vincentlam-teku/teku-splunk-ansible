@@ -1,0 +1,8 @@
+- name: Install and configure heavy forwarder
+  hosts: forwarder_heavy  
+  remote_user: centos
+  become: yes
+
+  roles:
+    - common
+    - forwarder_heavy

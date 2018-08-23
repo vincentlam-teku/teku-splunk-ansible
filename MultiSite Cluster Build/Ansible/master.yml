@@ -1,8 +1,0 @@
-- name: Install and configure the index cluster master
-  hosts: master
-  remote_user: ec2-user
-  become: yes
-
-  roles:
-    - common
-    - master

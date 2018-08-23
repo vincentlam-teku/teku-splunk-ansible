@@ -1,0 +1,44 @@
+---
+# This playbook will configure Splunk as a cluster master.
+# It relies of having all base configs built already, for information on this,
+# please contact Teku Professional Services @ www.tekugroup.net
+
+- name: Copy base configs
+  copy: src={{ deploypackages }}{{ base_configs }} dest=/var/tmp owner=splunk group=splunk mode=0755
+
+- name: Edit outputs base config master value
+  replace:
+    path: "/var/tmp/base_configs/org_all_core_outputs/local/outputs.conf"
+    regexp: '<master>'
+    replace: "{{ master_internal_ip }}"
+    backup: yes
+
+- name: Edit outputs base config master value
+  replace:
+    path: "/var/tmp/base_configs/org_all_core_outputs/local/outputs.conf"
+    regexp: '<splunkd_port>'
+    replace: "{{ splunkd_port }}"
+    backup: no
+
+- name: Edit outputs base config indexer discoevry secret value
+  replace:
+    path: "/var/tmp/base_configs/org_all_core_outputs/local/outputs.conf"
+    regexp: '<idxcluster_secret>'
+    replace: "{{ idxcluster_secret }}"
+    backup: yes
+
+- name: Copy global outputs config to app path
+  shell: cp -a "/var/tmp/base_configs/org_all_core_outputs" /opt/splunk/etc/apps/
+
+#- name: Configure splunk to join index cluster
+#  shell: /opt/splunk/bin/splunk edit cluster-config -master_uri https://{{ master_internal_ip }}:8089 -mode searchhead -multisite true -site site1 -replication_port 9887 -secret {{ clustersecret }} -auth {{ splkuser }}:{{ splkpass }}
+#  become: yes
+#  become_user: splunk
+
+- name: Fix 'app' permissions
+  file: path=/opt/splunk/etc/apps owner=splunk group=splunk mode=0755 state=directory recurse=yes
+
+- name: Restart Splunk
+  shell: /opt/splunk/bin/splunk restart
+  become: yes
+  become_user: splunk

@@ -1,0 +1,10 @@
+- name: Install and configure the search head deployer
+  vars:
+   description: 'A Splunk Enterprise instance that distributes baseline configurations and apps to search head cluster members. Is not a search head cluster member.'
+  hosts: deployer
+  remote_user: centos
+  become: yes
+
+  roles:
+    - common
+    - deployer

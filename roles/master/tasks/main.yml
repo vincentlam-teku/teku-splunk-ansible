@@ -5,44 +5,156 @@
 
 
 - name: Copy base configs
-  unarchive: src={{ deploypackages }}{{ base_configs }} dest=/var/tmp owner=splunk group=splunk mode=0755
+  copy: src={{ deploypackages }}{{ base_configs }} dest=/var/tmp owner=splunk group=splunk mode=0755
 
 - name: Edit outputs base config master value
   replace:
-    path: "/var/tmp/Configurations-Base/{{ org }}_all_outputs/local/outputs.conf"
+    path: "/var/tmp/base_configs/org_all_core_outputs/local/outputs.conf"
     regexp: '<master>'
     replace: "{{ master_internal_ip }}"
-    backup: yes
+    backup: no
 
-- name: Edit outputs base config indexer discoevry secret value
+- name: Edit outputs base config master value
   replace:
-    path: "/var/tmp/Configurations-Base/{{ org }}_all_outputs/local/outputs.conf"
-    regexp: '<discoverysecret>'
-    replace: "{{ discoverysecret }}"
-    backup: yes
+    path: "/var/tmp/base_configs/org_all_core_outputs/local/outputs.conf"
+    regexp: '<splunkd_port>'
+    replace: "{{ splunkd_port }}"
+    backup: no
 
-- name: Edit server base config - indexer discoery secret value
+- name: Edit outputs base config indexer discovery secret value
   replace:
-    path: "/var/tmp/Configurations-Base/{{ org }}_cm_base/local/server.conf"
-    regexp: '<discoverysecret>'
-    replace: "{{ discoverysecret }}"
-    backup: yes
-
-- name: Edit server base config clustering secret pass4symm value
-  replace:
-    path: "/var/tmp/Configurations-Base/{{ org }}_cm_base/local/server.conf"
+    path: "/var/tmp/base_configs/org_all_core_outputs/local/outputs.conf"
     regexp: '<idxcluster_secret>'
     replace: "{{ idxcluster_secret }}"
-    backup: yes
+    backup: no
 
 - name: Copy global outputs config to app path
-  shell: cp -a "/var/tmp/Configurations-Base/{{ org }}_all_outputs" /opt/splunk/etc/apps/
+  shell: cp -a "/var/tmp/base_configs/org_all_core_outputs" /opt/splunk/etc/apps/
 
 - name: Copy cm role configs to app path
-  shell: cp -a "/var/tmp/Configurations-Base/{{ org }}_cm_base" /opt/splunk/etc/apps/
+  shell: cp -a "/var/tmp/base_configs/org_cm_base" /opt/splunk/etc/apps/
 
-- name: Fix 'app' permissions
-  file: path=/opt/splunk/etc/apps owner=splunk group=splunk mode=0755 state=directory recurse=yes
+#Push Server Configs for Master - Single and Multi Site
+
+- name: Push Configure Files for Splunk Cluster Master - Single Site
+  copy: src=server.conf dest=/opt/splunk/etc/apps/org_cm_base/local/server.conf owner=splunk group=splunk mode=0755
+
+- name: Push Configure Files for Splunk Cluster Master - Multi Site
+  copy: src=server.conf.multi_site dest=/opt/splunk/etc/apps/org_cm_base/local/server.conf.multi_site owner=splunk group=splunk mode=0755
+
+# Single Site Configuration
+
+- name: Configure Site Replication Factor
+  replace:
+    path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf"
+    regexp: '<replication_factor>'
+    replace: "{{ replication_factor }}"
+    backup: no
+
+- name: Configure Site Search Factor
+  replace:
+    path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf"
+    regexp: '<search_factor>'
+    replace: "{{ search_factor }}"
+    backup: no
+
+- name: Edit server cluster config-indexer discovery secret values
+  replace:
+    path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf"
+    regexp: '<idxdiscovery_secret>'
+    replace: "{{ idxdiscovery_secret }}"
+    backup: no
+
+- name: Edit server indexer cluster config  secret values
+  replace:
+    path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf"
+    regexp: '<idxcluster_secret>'
+    replace: "{{ idxcluster_secret }}"
+    backup: no
+
+- name: Edit server search cluster config secret pass4symm value
+  replace:
+    path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf"
+    regexp: '<shcluster_secret>'
+    replace: "{{ shcluster_secret }}"
+    backup: no
+
+- name: Edit server cluster config for cluster label
+  replace:
+    path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf"
+    regexp: '<shcluster_label>'
+    replace: "{{ shcluster_label }}"
+    backup: no
+
+
+# Multi Site Configuration 
+- name: Configure Site Number
+  replace:
+    path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf.multi_site"
+    regexp: '<master_residence_site>'
+    replace: "{{ master_residence_site }}"
+    backup: no
+
+- name: Configure MultiSite Status
+  replace:
+    path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf.multi_site"
+    regexp: '<multisite_status>'
+    replace: "{{ multisite_status }}"
+    backup: no
+
+- name: Configure Available Sites
+  replace:
+    path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf.multi_site"
+    regexp: '<available_sites>'
+    replace: "{{ available_sites }}"
+    backup: no
+
+- name: Configure Site Replication Factor
+  replace:
+    path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf.multi_site"
+    regexp: '<site_replication_factor>'
+    replace: "{{ site_replication_factor }}"
+    backup: no
+
+- name: Configure Site Search Factor
+  replace:
+    path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf.multi_site"
+    regexp: '<site_search_factor>'
+    replace: "{{ site_search_factor }}"
+    backup: no
+
+- name: Edit server cluster config-indexer discovery secret values
+  replace:
+    path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf.multi_site"
+    regexp: '<idxdiscovery_secret>'
+    replace: "{{ idxdiscovery_secret }}"
+    backup: no
+
+- name: Edit server indexer cluster config  secret values
+  replace:
+    path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf.multi_site"
+    regexp: '<idxcluster_secret>'
+    replace: "{{ idxcluster_secret }}"
+    backup: no
+
+- name: Edit server search cluster config secret pass4symm value
+  replace:
+    path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf.multi_site"
+    regexp: '<shcluster_secret>'
+    replace: "{{ shcluster_secret }}"
+    backup: no
+
+- name: Edit server cluster config for cluster label
+  replace:
+    path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf.multi_site"
+    regexp: '<shcluster_label>'
+    replace: "{{ shcluster_label }}"
+    backup: no
+
+# Configuration Push and Write to Splunk Hosts
+
+#- name: Fix 'app' permissions
+#  file: path=/opt/splunk/etc/apps owner=splunk group=splunk mode=0755 state=directory recurse=yes
 
 - name: Restart Splunk
   shell: /opt/splunk/bin/splunk restart

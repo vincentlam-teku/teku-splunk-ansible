@@ -1,0 +1,9 @@
+- name: Configure the index cluster master
+  hosts: master
+  vars:
+   description: The indexer cluster node that regulates the functioning of an indexer cluster.
+  remote_user: centos
+  become: yes
+
+  roles:
+    - config_cluster_master

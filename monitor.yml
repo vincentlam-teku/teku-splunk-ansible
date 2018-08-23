@@ -1,0 +1,8 @@
+- name: Install and configure the monitoring console
+  hosts: monitor
+  remote_user: centos
+  become: yes
+
+  roles:
+    - common
+    - monitor

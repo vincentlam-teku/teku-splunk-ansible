@@ -1,0 +1,34 @@
+- name: Copy base configs
+  copy: src={{ deploypackages }}{{ base_configs }} dest=/var/tmp owner=splunk group=splunk mode=0755
+
+- name: Edit outputs base config master value
+  replace:
+    path: "/var/tmp/base_configs/org_all_core_outputs/local/outputs.conf"
+    regexp: '<master>'
+    replace: "{{ master_internal_ip }}"
+    backup: no
+
+- name: Edit outputs base config master value
+  replace:
+    path: "/var/tmp/base_configs/org_all_core_outputs/local/outputs.conf"
+    regexp: '<splunkd_port>'
+    replace: "{{ splunkd_port }}"
+    backup: no
+
+- name: Edit outputs base config secret value
+  replace:
+    path: "/var/tmp/base_configs/org_all_core_outputs/local/outputs.conf"
+    regexp: '<idxdiscovery_secret>'
+    replace: "{{ idxdiscovery_secret }}"
+    backup: no
+
+- name: Copy base configs to app path
+  shell: cp -a "/var/tmp/base_configs/org_all_core_outputs" /opt/splunk/etc/apps/
+
+#- name: Fix 'app' permissions
+#  file: path=/opt/splunk/etc/apps owner=splunk group=splunk mode=0755 state=directory recurse=yes
+
+- name: Restart Splunk
+  shell: /opt/splunk/bin/splunk restart
+  become: yes
+  become_user: splunk

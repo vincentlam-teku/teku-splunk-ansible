@@ -1,0 +1,62 @@
+---
+# This playbook contains the tasks to reset instance and remove all traces of former setup.
+
+- name: cleanup files
+  shell: find /opt/splunk/etc/apps -type f -name '._*' -delete && find /opt/splunk/etc/apps -type f -name '*.conf.*' -delete && find /opt/splunk/etc/apps -type f -name '.DS_Store' -delete
+  ignore_errors: yes
+
+- name: Stop Splunk
+  command: /opt/splunk/bin/splunk stop --accept-license --answer-yes --no-prompt
+  ignore_errors: yes
+
+- name: Splunk Clean All Data
+  command: /opt/splunk/bin/splunk clean globaldata -f --answer-yes --no-prompt
+  ignore_errors: yes
+
+- name: Disable Splunk Boot-Start
+  command: /opt/splunk/bin/splunk disable boot-start --accept-license --answer-yes --no-prompt
+  ignore_errors: yes
+
+- name: Delete Splunk User
+  command: sudo userdel -f splunk 
+  ignore_errors: yes
+
+- name: Delete Splunk Group
+  command: sudo groupdel -f splunk 
+  ignore_errors: yes
+
+- name: Delete Splunk User Directory
+  command: sudo rm -rf /home/splunk/
+  ignore_errors: yes
+  
+- name: Delete Splunk Installation Binary
+  command: sudo rm -rf /var/tmp/*.tgz
+  ignore_errors: yes  
+
+- name: Delete Splunk Files 
+  command: sudo rm -rf /opt/splunk
+  ignore_errors: yes
+
+- name: Delete Splunk Forwader Installation Binary
+  command: sudo rm -rf /opt/{{splunk_forwarder}}
+  ignore_errors: yes  
+
+- name: Delete Splunk Forwarder Files 
+  command: sudo rm -rf /opt/splunkforwarder
+  ignore_errors: yes
+
+- name: Delete Splunk Base Config Files 
+  command: sudo rm -rf /var/tmp/base_configs
+  ignore_errors: yes
+
+- name: Kill running splunkd processes
+  shell: pkill splunkd
+  ignore_errors: yes
+
+- name: Kill running mongo db processes
+  shell: pkill mongod
+  ignore_errors: yes
+
+- name: Delete Ansible Retry Files
+  command: sudo rm -rf ~/teku-splunk-ansible/*.retry
+  ignore_errors: yes

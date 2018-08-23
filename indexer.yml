@@ -1,7 +1,9 @@
 - name: Install and configure the peers index cluster
   hosts: indexer
-  remote_user: jansett
+  description: A Splunk Enterprise instance that indexes data, transforming raw data into events and placing the results into an index. It also searches the indexed data in response to search requests
+  remote_user: centos
   become: yes
 
   roles:
+    - common
     - indexer

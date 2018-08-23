@@ -1,0 +1,18 @@
+---
+#
+
+- name: Configure splunk cluster master
+  shell: /opt/splunk/bin/splunk edit cluster-config -mode {{ cluster_mode }} -multisite {{ multisite_status }} -replication_factor 2 -available_sites {{ available_sites }} -site site{{ master_residence_site }} -site_replication_factor {{ site_replication_factor }} -site_search_factor {{ site_search_factor }} -secret {{ idxcluster_secret }} -auth {{ splkuser }}:{{ splkpass }}
+  become: yes
+  become_user: splunk
+  ignore_errors: yes
+#  async: 45
+  register: config_cluster_master_result 
+
+- name: Restart Splunk
+  shell: /opt/splunk/bin/splunk restart
+  become: yes
+  become_user: splunk
+#  async: 45
+#  poll: 5
+  when: config_cluster_master_result is succeeded

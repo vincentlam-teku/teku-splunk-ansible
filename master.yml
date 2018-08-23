@@ -1,7 +1,10 @@
 - name: Install and configure the index cluster master
   hosts: master
-  remote_user: jansett
+  vars:
+   description: The indexer cluster node that regulates the functioning of an indexer cluster.
+  remote_user: centos
   become: yes
 
   roles:
+    - common
     - master

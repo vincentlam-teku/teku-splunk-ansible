@@ -1,0 +1,8 @@
+- name: Install and configure the deployment server
+  hosts: deployment
+  remote_user: centos
+  become: yes
+
+  roles:
+   - common
+   - deployment

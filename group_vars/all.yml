@@ -3,31 +3,102 @@
 # MANDATORY - MUST BE CORRECT FOR DEPLOYMENT #
 # MANDATORY - MUST BE CORRECT FOR DEPLOYMENT #
 
-deploypackages: /root
-wget_url: https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=7.0.1&product=splunk&filename=splunk-7.0.1-2b5b15c4ee89-linux-2.6-x86_64.rpm&wget=true
-enterprise: splunk-7.0.1-2b5b15c4ee89-linux-2.6-x86_64.rpm
-base_configs: Configurations-Base.tgz
-org: smbmi
-label: smbmi
-master_internal_ip: 10.232.216.46
-deployer_internal_ip: 10.232.216.46
-shcluster_label: smbmi_shcluster
+deploypackages: ~/teku-splunk-ansible
+base_configs: /base_configs
+
+#Tars
+wget_url_splunk_enterprise: https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=7.1.2&product=splunk&filename=splunk-7.1.2-a0c72a66db66-Linux-x86_64.tgz&wget=true
+wget_url_splunk_forwarder: https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=7.1.2&product=universalforwarder&filename=splunkforwarder-7.1.2-a0c72a66db66-Linux-x86_64.tgz&wget=true
+splunk_enterprise: splunk-7.1.2-a0c72a66db66-Linux-x86_64.tgz
+splunk_forwarder: splunkforwarder-7.1.2-a0c72a66db66-Linux-x86_64.tgz
+
+#RPM
+#wget_url_splunk_enterprise: https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=7.1.2&product=splunk&filename=splunk-7.1.2-a0c72a66db66-linux-2.6-x86_64.rpm&wget=true
+#wget_url_splunk_forwarder: https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=7.1.2&product=universalforwarder&filename=splunkforwarder-7.1.2-a0c72a66db66-linux-2.6-x86_64.rpm&wget=true
+#splunk_enterprise: splunk-7.1.2-a0c72a66db66-linux-2.6-x86_64.rpm
+#splunk_forwarder: splunkforwarder-7.1.2-a0c72a66db66-linux-2.6-x86_64.rpm
+
+org: teku
+label: teku
+
+#Declare Deployment Hosts 
+#Comment out to make deployment
+ 
+#UTILITIES
+
+#Master
+master_internal_ip: 172.31.0.208  
+#master_external_ip: 
+
+#Console
+console_internal_ip: 172.31.10.136
+#console_external_ip: 
+
+#Licenser
+licenser_internal_ip: 172.31.11.114
+#licenser_external_ip: 
+
+#Deployer 
+deployer_internal_ip: 172.31.1.103 
+#deployer_external_ip: 
+
+#Deployment
+deployment_internal_ip: 172.31.4.36
+#deployment_external_ip: 
+
+#LABELS
+shcluster_label: teku_shcluster
+idxcluster_label: teku_idxcluster
+
+#SECRETS for PASS4SYM
 shcluster_secret: password123
 idxcluster_secret: password123
-
-#To be depreciated
-discoverysecret: password123
-
-# Fixed Values
-peermode: slave
-membermode: searchhead
-
-# Optional Values
-ntpserver: pool.ntp.org
-idx_rep_port: 9887
-shc_rep_port: 8181
-
-# Not yet implemented
-splkuser: admin
-splkpass: changeme
 idxdiscovery_secret: password123
+
+#Multi Site Status?
+multisite_status: true
+#multisite_status: false
+
+#Counts
+site_count: 2
+
+#Host Counts
+master_count: 1
+licenser_count: 1
+monitor_count: 1
+search_peer_count: 2 #Indexer
+search_members: 2 #Search Heads
+forwarder_count: 2 
+
+#Site Variables 
+disable_search_affinity: 0
+master_residence_site: 1  
+
+available_sites: site1,site2
+
+#Forwarder Variables:
+useAck: true
+
+#Indxer Variables
+polling_rate: 1
+
+#Site Replication Factor
+replication_factor: 2 
+site_replication_factor: origin:1,total:2 
+
+#Search Variables
+
+#Search Factor
+search_factor: 2
+site_search_factor: origin:1,total:2
+
+# Ports
+splunk_web_port: 8000
+splunkd_port: 8089
+idx_rep_port: 9100
+shc_rep_port: 9200
+forwarder_listening_port: 9997
+
+# Default Splunk Application User and Password at Install
+splkuser: admin
+splkpass: password

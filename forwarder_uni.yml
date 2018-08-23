@@ -1,0 +1,7 @@
+- name: Install and configure universal forwarder 
+  hosts: forwarder_uni
+  remote_user: centos
+  become: yes
+
+  roles:
+    - forwarder_uni
