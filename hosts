@@ -32,7 +32,7 @@ cluster_mode=master
 #
 [monitor]
 #127.0.0.1
-172.31.10.136
+172.31.10.136 site_count=1
 
 [monitor:vars]
 cluster_mode=searchhead
@@ -72,7 +72,7 @@ cluster_mode=searchhead
 [site1]
 172.31.6.54#Indexer
 172.31.8.185#Search
-#172.31.10.136#Monitor
+172.31.10.136#Monitor
 
 [site1:vars]
 site_count=1
@@ -92,7 +92,7 @@ deployment
 #monitor
 indexer
 search
-#forwarder_heavy
+forwarder_heavy
 
 [license_slaves:children]
 master
