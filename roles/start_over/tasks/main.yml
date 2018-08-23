@@ -10,7 +10,7 @@
   ignore_errors: yes
 
 - name: Splunk Clean All Data
-  command: /opt/splunk/bin/splunk clean globaldata -f 
+  command: /opt/splunk/bin/splunk clean globaldata -f --answer-yes --no-prompt
   ignore_errors: yes
 
 - name: Disable Splunk Boot-Start
@@ -30,7 +30,7 @@
   ignore_errors: yes
   
 - name: Delete Splunk Installation Binary
-  command: sudo rm -rf /opt/{{splunk_enterprise}}
+  command: sudo rm -rf /var/tmp/*.tgz
   ignore_errors: yes  
 
 - name: Delete Splunk Files 

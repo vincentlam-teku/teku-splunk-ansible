@@ -153,11 +153,10 @@
 
 # Configuration Push and Write to Splunk Hosts
 
-- name: Fix 'app' permissions
-  file: path=/opt/splunk/etc/apps owner=splunk group=splunk mode=0755 state=directory recurse=yes
+#- name: Fix 'app' permissions
+#  file: path=/opt/splunk/etc/apps owner=splunk group=splunk mode=0755 state=directory recurse=yes
 
 - name: Restart Splunk
   shell: /opt/splunk/bin/splunk restart
   become: yes
   become_user: splunk
-

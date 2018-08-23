@@ -91,5 +91,6 @@
   shell: /opt/splunk/bin/splunk restart
   become: yes
   become_user: splunk
-
+#  async: 45
+#  poll: 0
 

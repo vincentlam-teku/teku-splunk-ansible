@@ -1,0 +1,77 @@
+---
+# This playbook contains common plays that will be run on all nodes.
+#
+- name: Set open files limit for splunk
+  copy: src=20-nofile.conf dest=/etc/security/limits.d/ owner=root group=root mode=0755
+
+- name: Set max processes limit
+  copy: src=20-nproc.conf dest=/etc/security/limits.d/ owner=root group=root mode=0755
+
+- name: Set core file size
+  copy: src=20-core.conf dest=/etc/security/limits.d/ owner=root group=root mode=0755
+
+- name: Copy Disable THP File
+  copy: src=disable-thp dest=/etc/init.d/ owner=root group=root mode=0755
+
+- name: Disable Transparent Huge Page
+  shell: sudo chkconfig --add disable-thp
+
+- name: Download Splunk
+  get_url: url={{ wget_url_splunk_enterprise }} dest=/var/tmp/ owner=centos group=centos mode=0644
+
+#- name: Install Splunk Enterprise Package via RPM
+#  yum: 
+#   name: /var/tmp/{{ splunk_enterprise }} 
+#   state: present
+#  async: 45
+#  poll: 5  
+
+- name: Install Splunk Enterprise package
+  unarchive: 
+   src: /var/tmp/{{splunk_enterprise}} 
+   dest: /opt/ 
+
+- name: Add Splunk Service User   
+  command: sudo useradd -m -r splunk 
+  ignore_errors: yes
+  become: yes
+  become_user: root  
+
+- name: Assign Password to Splunk Service User
+  command: echo 'password' | sudo passwd splunk --stdin 
+  ignore_errors: yes
+  become: yes
+  become_user: root  
+
+- name: Assign /opt/splunk to Splunk Service User
+  shell: sudo chown -R splunk:splunk /opt/splunk 
+  ignore_errors: yes
+  become: yes
+  become_user: root  
+
+- name: Copy User-Seed  
+  copy: src=user-seed.conf dest=/opt/splunk/etc/system/local/ owner=splunk group=splunk mode=0755
+  ignore_errors: yes
+  become: yes
+  become_user: root  
+
+- name: Configure boot-start with Splunk user
+  shell: /opt/splunk/bin/splunk enable boot-start -user splunk --accept-license --answer-yes --no-prompt
+  ignore_errors: yes
+  become: yes
+  become_user: root 
+
+#- name: Copy Deployment Client Configs from 
+#  copy: src=deploymentclient.conf dest=/opt/splunk/etc/system/local/ owner=splunk group=splunk mode=0755
+
+- name: Fix 'app' permissions
+  file: path=/opt/splunk/etc/apps owner=splunk group=splunk mode=0755 state=directory recurse=yes
+  ignore_errors: yes
+  become: yes
+  become_user: root
+
+- name: Start Splunk
+  shell: /opt/splunk/bin/splunk start --answer-yes
+  become: yes
+  become_user: splunk
+  

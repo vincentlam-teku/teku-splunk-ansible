@@ -6,8 +6,11 @@
   become: yes
   become_user: splunk
   ignore_errors: yes
+  register: add_sh_to_idxcluster_result
 
 - name: Restart Splunk
   shell: /opt/splunk/bin/splunk restart
   become: yes
   become_user: splunk
+#  async: 45
+  when: add_sh_to_idxcluster_result is succeeded 
