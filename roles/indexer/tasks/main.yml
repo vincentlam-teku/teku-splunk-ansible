@@ -85,6 +85,13 @@
     replace: "{{ idx_rep_port }}"
     backup: yes
 
+# Enable Receiving
+
+- name: Enable Listening 
+  shell: /opt/splunk/bin/splunk enable listen {{forwarder_listening_port}} -auth {{splkuser}}:{{splkpass}}
+  become: yes
+  become_user: splunk
+
 # Enable New Configurations to propagate
 
 - name: Restart Splunk

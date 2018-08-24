@@ -1,0 +1,27 @@
+---
+# Heavy Forwarder 
+
+- name : Set up Splunk Heavy Forwarder to enable forwarding
+  shell: /opt/splunk/bin/splunk enable app SplunkForwarder -auth {{splkuser}}:{{splkpass}}
+  become: yes
+  become_user: splunk
+  register: splunk_forwarding_enabled
+
+- name: Restart Splunk
+  shell: /opt/splunk/bin/splunk restart --answer-yes
+  become: yes
+  become_user: splunk
+  when: splunk_forwarding_enabled is succeeded
+
+#- name : Set up Splunk Heavy Forwarder to forward activity
+#  shell: /opt/splunk/bin/splunk add forward-server -auth {{splkuser}}:{{splkpass}}
+#  become: yes
+#  become_user: splunk
+#  register: splunk_forwarding_start
+
+#- name: Restart Splunk
+#  shell: /opt/splunk/bin/splunk restart --answer-yes
+#  become: yes
+#  become_user: splunk
+#  when: splunk_forwarding_start is succeeded
+

@@ -1,32 +1,90 @@
 ---
 # This playbook contains common plays that will be run on forwarder nodes.
 #
-- name: Download Splunk Forwader
-  get_url: url={{wget_url_splunk_forwarder}} dest=/opt/ owner=root group=root mode=0755
+- name: add splunk group
+  tags:
+   - install
+  group: name=splunk state=present
+
+- name: Add Splunk Service User   
+  user: name=splunk comment="Splunk Service User" shell=/usr/sbin/nologin groups=splunk createhome=no 
+  ignore_errors: yes
+
+- name: make /opt writetable by splunk
+  tags:
+   - install
+  file: path=/opt mode=777
+
+- name: Create /home/splunk/.splunk for storing temporary
+  tags:
+   - neccessary
+  file: 
+   path: /home/splunk/.splunk
+   owner: splunk
+   group: splunk
+   mode: 0755
+   recurse: yes  
+
+- name: checking if splunk forwarder is installed
+  tags: install
+  stat: path=/opt/splunkforwarder
+  register: splunk_forwarder_path
+
+- name: is splunk forwarder installed? 
+  tags: install
+  debug: msg='splunk is already installed under /opt/splunkforwarder'
+  when: splunk_forwarder_path.stat.exists
+
+- name: checking if splunk forwarder install binary is present
+  tags: install
+  stat: path=/var/tmp/{{splunk_forwarder}}
+  register: splunk_forwarder_install_binary
+
+- name: is splunk forwarder install binary present
+  tags: install
+  debug: msg='splunk forwarder install binary is present no need to download'
+  when: splunk_forwarder_install_binary.stat.exists
+
+- name: Download Splunk
+  get_url: url={{ wget_url_splunk_forwarder}} dest=/var/tmp/ owner=root group=root mode=0755
+  when: splunk_forwarder_install_binary.stat.exists == false
 
 - name: Install Splunk Forwarder package
-  command: tar -xvzf /opt/{{splunk_forwarder}} -C /opt 
-
-- name: Add Splunk User   
-  command: sudo useradd -m -r splunk 
-
-- name: Assign Password to Splunk User
-  command: echo 'password' | sudo passwd splunk --stdin 
-
-- name: Assign /opt/splunk to Splunk Service User
-  command: sudo chown -R splunk:splunk /opt/splunkforwarder 
+  unarchive: src=/var/tmp/{{splunk_forwarder}} dest=/opt/ owner=splunk group=splunk creates=yes remote_src=yes
+  become: yes
+  become_user: splunk
+  when: splunk_forwarder_install_binary.stat.exists
 
 - name: Copy User-Seed
   copy: src=user-seed.conf dest=/opt/splunkforwarder/etc/system/local/ owner=splunk group=splunk mode=0755
+  become: yes
+  become_user: splunk
+  when: splunk_forwarder_path.stat.exists == false
 
-- name: Copy Outputs.conf
-  copy: src=outputs.conf dest=/opt/splunkforwarder/etc/system/local/ owner=splunk group=splunk mode=0755
+- name: accept license and start splunk splunkforwarder
+  tags:
+   - install
+  shell: /opt/splunkforwarder/bin/splunk start --accept-license --answer-yes --no-prompt
+  become: yes
+  become_user: splunk
+  when: splunk_forwarder_path.stat.exists == false
+  register: install_splunk_forwarder_result
+
+#- name: Copy Outputs.conf
+#  copy: src=outputs.conf dest=/opt/splunkforwarder/etc/system/local/ owner=splunk group=splunk mode=0755
 
 - name: Configure boot-start with splunk user
   shell: /opt/splunkforwarder/bin/splunk enable boot-start -user splunk --accept-license --answer-yes
-  ignore_errors: yes  
+  become: yes  
+  become_user: root
+  when: install_splunk_forwarder_result is succeeded 
+
+- name: make /etc/init.d/splunk executable
+  tags:
+   - install
+  file: path=/etc/init.d/splunk mode=755
  
-- name: Start Splunk
+- name: ReStart Splunk
   shell: /opt/splunkforwarder/bin/splunk restart
   become: yes
   become_user: splunk

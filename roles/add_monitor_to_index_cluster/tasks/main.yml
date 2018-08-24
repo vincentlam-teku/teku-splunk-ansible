@@ -1,5 +1,5 @@
 ---
-#
+#Add Monitoring Console to Index Cluster 
 
 - name: Configure splunk monitoring console to join index cluster
   shell: /opt/splunk/bin/splunk edit cluster-config -master_uri https://{{ master_internal_ip }}:{{ splunkd_port }} -mode {{ cluster_mode }} -site site{{site_count}} -secret {{ idxcluster_secret }} -auth {{ splkuser }}:{{ splkpass }}
@@ -13,4 +13,4 @@
   become: yes
   become_user: splunk
 #  async: 45
-  when: add_sh_mc_idxcluster_result is succeeded 
+  when: add_mc_idxcluster_result is succeeded 

@@ -19,6 +19,10 @@
    - common
 
 #Configure Utility Servers 
+- hosts: licenser
+
+  roles:
+   - licenser
 
 - hosts: master
 
@@ -34,7 +38,12 @@
 
   roles:
    - deployment
+
+- hosts: monitor
   
+  roles: 
+   - monitor
+
 #Configure Indexer Hosts as Splunk Indexers 
 - hosts: indexer
 
@@ -46,6 +55,19 @@
 
   roles:
    - search 
+
+#Configure License Pool
+- hosts: license_slaves
+  
+  roles: 
+   - license_pool
+
+#Configure Forwarders 
+- hosts: forwarders
+
+  roles: 
+   - forwarder_heavy
+   - forwarder_uni
 
 #Configure Clustering
 
@@ -71,12 +93,14 @@
 
 # Add Monitor to Index Cluster
 
-- hosts: add 
+- hosts: monitor
 
+  roles: 
+    - add_monitor_to_index_cluster
+    
 # Configure Search Head Cluster 
 
 - hosts: search
 
   roles:
    - config_search_cluster
-

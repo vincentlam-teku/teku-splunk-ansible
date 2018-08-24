@@ -86,10 +86,10 @@ site_count=2
 
 [common:children]
 master
-#licenser
+licenser
 deployer
 deployment
-#monitor
+monitor
 indexer
 search
 forwarder_heavy
