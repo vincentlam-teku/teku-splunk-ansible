@@ -11,6 +11,7 @@ wget_url_splunk_enterprise: https://www.splunk.com/bin/splunk/DownloadActivitySe
 wget_url_splunk_forwarder: https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=7.1.2&product=universalforwarder&filename=splunkforwarder-7.1.2-a0c72a66db66-Linux-x86_64.tgz&wget=true
 splunk_enterprise: splunk-7.1.2-a0c72a66db66-Linux-x86_64.tgz
 splunk_forwarder: splunkforwarder-7.1.2-a0c72a66db66-Linux-x86_64.tgz
+splunk_itsi: splunk-it-service-intelligence_314.spl
 
 #RPM
 #wget_url_splunk_enterprise: https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=7.1.2&product=splunk&filename=splunk-7.1.2-a0c72a66db66-linux-2.6-x86_64.rpm&wget=true
@@ -27,7 +28,7 @@ label: teku
 #UTILITIES
 
 #Master
-master_internal_ip: 172.31.0.208  
+master_internal_ip: 172.31.1.84 #172.31.0.208#multi-site  
 #master_external_ip: 
 
 #Console
@@ -35,7 +36,7 @@ console_internal_ip: 172.31.10.136
 #console_external_ip: 
 
 #Licenser
-licenser_internal_ip: 172.31.11.114
+licenser_internal_ip: 172.31.1.84 #172.31.11.114#multi-site
 #licenser_external_ip: 
 
 #Deployer 
@@ -64,11 +65,11 @@ site_count: 2
 #Host Counts
 master_count: 1
 licenser_count: 1
-monitor_count: 1
-deployer_count: 1
-deployment_count: 1
-search_peer_count: 2 #Indexer
-search_members: 2 #Search Heads
+monitor_count: 0
+deployer_count: 0
+deployment_count: 0
+search_peer_count: 3 #Indexer
+search_members: 1 #Search Heads
 forwarder_count: 2 
 
 #Site Variables 
@@ -84,13 +85,13 @@ useAck: true
 polling_rate: 1
 
 #Site Replication Factor
-replication_factor: 2 
+replication_factor: 3 
 site_replication_factor: origin:1,total:2 
 
 #Search Variables
 
 #Search Factor
-search_factor: 2
+search_factor: 1
 site_search_factor: origin:1,total:2
 
 # Ports

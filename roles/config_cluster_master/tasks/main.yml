@@ -1,20 +1,20 @@
 ---
 #
 #Single-Site
-#- name: Configure splunk cluster master
-#  shell: /opt/splunk/bin/splunk edit cluster-config -mode {{ cluster_mode }} -replication_factor 2  -search_factor 2 -secret {{ idxcluster_secret }} -auth {{ splkuser }}:{{ splkpass }}
-#  become: yes
-#  become_user: splunk
-#  ignore_errors: yes
-#  async: 45
-#  register: config_cluster_master_result 
-
-#Multi-Site
 - name: Configure splunk cluster master
-  shell: /opt/splunk/bin/splunk edit cluster-config -mode {{ cluster_mode }} -multisite {{ multisite_status }} -replication_factor 2 -available_sites {{ available_sites }} -site site{{ master_residence_site }} -site_replication_factor {{ site_replication_factor }} -site_search_factor {{ site_search_factor }} -secret {{ idxcluster_secret }} -auth {{ splkuser }}:{{ splkpass }}
+  shell: /opt/splunk/bin/splunk edit cluster-config -mode {{ cluster_mode }} -replication_factor {{replication_factor}}  -search_factor {{search_factor}} -secret {{ idxcluster_secret }} -auth {{ splkuser }}:{{ splkpass }}
   become: yes
   become_user: splunk
   ignore_errors: yes
+  async: 45
+  register: config_cluster_master_result 
+
+#Multi-Site
+#- name: Configure splunk cluster master
+#  shell: /opt/splunk/bin/splunk edit cluster-config -mode {{ cluster_mode }} -multisite {{ multisite_status }} -replication_factor 2 -available_sites {{ available_sites }} -site site{{ master_residence_site }} -site_replication_factor {{ site_replication_factor }} -site_search_factor {{ site_search_factor }} -secret {{ idxcluster_secret }} -auth {{ splkuser }}:{{ splkpass }}
+#  become: yes
+#  become_user: splunk
+#  ignore_errors: yes
 #  async: 45
 
   register: config_cluster_master_result 

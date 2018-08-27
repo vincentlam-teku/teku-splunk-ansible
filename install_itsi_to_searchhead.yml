@@ -1,0 +1,7 @@
+- name: Install ITSI on Search heads
+  hosts: search
+  remote_user: centos
+  become: yes
+
+  roles:
+    - install_itsi_to_searchhead

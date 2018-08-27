@@ -1,0 +1,45 @@
+#===========INVENTORY===========
+# Here you would define each host and their catergory for deployment
+
+# servers that are meant to be cluster masters, will also have the common config applied.
+#
+[master]
+172.31.1.84
+
+[master:vars]
+cluster_mode=master
+
+# servers that are meant to be license masters, will also have the common config applied.
+#
+[licenser]
+#127.0.0.1
+172.31.1.84
+
+# servers that are meant to be indexers, will also have the common config applied.
+#
+[indexer]
+#127.0.0.1
+172.31.1.76
+172.31.3.118
+172.31.4.194
+
+[indexer:vars]
+cluster_mode=slave
+
+# servers that are meant to be splunk search heads, will also have the common config applied.
+#
+[search]
+#127.0.0.1
+172.31.2.71
+
+[search:vars]
+cluster_mode=searchhead
+
+[common:children]
+master
+licenser
+indexer
+search
+
+[indexer_cluster:children]
+indexer

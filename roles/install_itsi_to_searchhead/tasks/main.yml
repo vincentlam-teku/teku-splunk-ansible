@@ -1,0 +1,27 @@
+---
+#Single Site
+
+- name: Stop Splunk
+  shell: /opt/splunk/bin/splunk stop --answer-yes
+  become: yes
+  become_user: splunk
+#  async: 45
+#  #when: install_splunk_result is succeeded 
+
+- name: Copy ITSI Binary
+  copy: src=splunk-it-service-intelligence_314.spl dest=/var/tmp/ owner=splunk group=splunk mode=0755
+  become: yes
+  become_user: splunk
+
+- name: Install ITSI Binary 
+  unarchive: src=/var/tmp/{{splunk_itsi}} dest=/opt/splunk/etc/apps owner=splunk group=splunk creates=yes remote_src=yes
+  become: yes
+  become_user: splunk
+
+- name: Restart Splunk
+  shell: /opt/splunk/bin/splunk start --answer-yes
+  become: yes
+  become_user: splunk
+#  async: 45
+#  #when: install_splunk_result is succeeded 
+
