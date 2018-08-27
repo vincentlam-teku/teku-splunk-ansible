@@ -1,4 +1,4 @@
 *.pem
 *.retry
-*aws.yml
-*boto.cfg
+aws_hosts.yml
+boto.cfg
