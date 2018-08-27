@@ -1,5 +1,5 @@
 ---
-# This playbook will configure Splunk as an index peer in a cluster.
+# This playbook will configure Splunk as an indexer and place base configs in apps directory
 # It relies of having all base configs built already, for information on this,
 # please contact Teku Professional Services @ www.tekugroup.net
 
@@ -19,28 +19,28 @@
 
 # Write Configurations for Single Site Server Config File
 
-- name: Configure Master URI
+- name: Configure Master URI for org all indexer base single site
   replace:
     path: "/opt/splunk/etc/apps/org_all_indexer_base/server.conf"
     regexp: '<master>'
     replace: "{{ master_internal_ip }}"
     backup: yes
 
-- name: Configure Master Port
+- name: Configure Master Port for org all indexer base single site
   replace:
     path: "/opt/splunk/etc/apps/org_all_indexer_base/server.conf"
     regexp: '<splunkd_port>'
     replace: "{{ splunkd_port }}"
     backup: yes
 
-- name: Edit server cluster config for index cluster pass4Symm value
+- name: Write org all indexer base Edit server cluster config for index cluster pass4Symm value
   replace:
     path: "/opt/splunk/etc/apps/org_all_indexer_base/server.conf"
     regexp: '<idxcluster_secret>'
     replace: "{{ idxcluster_secret }}"
     backup: yes
 
-- name: Configure Replication Port
+- name: Write Org all Indexer Base Configure Replication Port Single Site
   replace:
     path: "/opt/splunk/etc/apps/org_all_indexer_base/server.conf"
     regexp: '<idx_rep_port>'
@@ -57,28 +57,28 @@
 #    backup: yes
 #    ignore_errors: yes
 
-- name: Configure Master URI
+- name: Write for org all indexer base Configure Master URI Multi SIte
   replace:
     path: "/opt/splunk/etc/apps/org_all_indexer_base/server.conf.multi_site"
     regexp: '<master>'
     replace: "{{ master_internal_ip }}"
     backup: yes
 
-- name: Configure Master Port
+- name: Write for org all indexer base Configure Master Port Multi SIte
   replace:
     path: "/opt/splunk/etc/apps/org_all_indexer_base/server.conf.multi_site"
     regexp: '<splunkd_port>'
     replace: "{{ splunkd_port }}"
     backup: yes
 
-- name: Edit server cluster config for index cluster pass4Symm value
+- name: Write for org all indexer base  server cluster config for index cluster pass4Symm value multi-site
   replace:
     path: "/opt/splunk/etc/apps/org_all_indexer_base/server.conf.multi_site"
     regexp: '<idxcluster_secret>'
     replace: "{{ idxcluster_secret }}"
     backup: yes
 
-- name: Configure Replication Port
+- name: Write for org all indexer base Server Configure Replication Port Multi Site
   replace:
     path: "/opt/splunk/etc/apps/org_all_indexer_base/server.conf.multi_site"
     regexp: '<idx_rep_port>'

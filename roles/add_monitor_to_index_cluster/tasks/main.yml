@@ -13,4 +13,4 @@
   become: yes
   become_user: splunk
 #  async: 45
-  when: add_mc_idxcluster_result is succeeded 
+  when: add_mc_to_idxcluster_result is succeeded 

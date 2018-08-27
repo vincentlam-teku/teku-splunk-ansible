@@ -1,10 +1,10 @@
 ---
-# This playbook will configure Splunk  as a search head cluster member.
+# This playbook will configure Splunk as a search head and place base configs into app directory
 
 - name: Copy base configs
   copy: src={{ deploypackages }}{{ base_configs }} dest=/var/tmp/ owner=splunk group=splunk mode=0744
 
-- name: Edit outputs base config master value
+- name: Edit outputs base config master value 
   replace:
     path: "/var/tmp/base_configs/org_all_core_outputs/local/outputs.conf"
     regexp: '<master>'
@@ -34,42 +34,42 @@
 
 # Configs for Single Site
 
-- name: Configure Master URI
+- name: Org all Search Base Configure Master URI Single Site
   replace:
     path: "/opt/splunk/etc/apps/org_all_search_base/server.conf"
     regexp: '<master>'
     replace: "{{ master_internal_ip }}"
     backup: yes
 
-- name: Configure Deployer URI
+- name: Org all Search Base Configure Deployer URI Single Site
   replace:
     path: "/opt/splunk/etc/apps/org_all_search_base/server.conf"
     regexp: '<deployer>'
     replace: "{{ deployer_internal_ip }}"
     backup: yes
 
-- name: Configure Master Port
+- name: Org all Search Base Configure Master Port Single Site
   replace:
     path: "/opt/splunk/etc/apps/org_all_search_base/server.conf"
     regexp: '<splunkd_port>'
     replace: "{{ splunkd_port }}"
     backup: yes
 
-- name: Edit server cluster config for indexer discovery pass4Symm value
+- name: Org all Search Base Edit server cluster config for indexer discovery pass4Symm value Single Site
   replace:
     path: "/opt/splunk/etc/apps/org_all_search_base/server.conf"
     regexp: '<idxdiscovery_secret>'
     replace: "{{ idxdiscovery_secret }}"
     backup: yes
 
-- name: Edit server cluster config for indxer cluster pass4Symm value
+- name: Org all Search Base Edit server cluster config for indxer cluster pass4Symm value Single site
   replace:
     path: "/opt/splunk/etc/apps/org_all_search_base/server.conf"
     regexp: '<idxcluster_secret>'
     replace: "{{ idxcluster_secret }}"
     backup: yes
 
-- name: Edit server cluster config for search head cluster pass4Symm value
+- name: Org all Search Base Edit server cluster config for search head cluster pass4Symm value Single site
   replace:
     path: "/opt/splunk/etc/apps/org_all_search_base/server.conf"
     regexp: '<shcluster_secret>'
@@ -88,49 +88,49 @@
 #    backup: yes
 #    ignore_errors: yes
 
-- name: Configure Master URI
+- name: Org all Search Base Configure Master URI Multi SIte
   replace:
     path: "/opt/splunk/etc/apps/org_all_search_base/server.conf.multi_site"
     regexp: '<master>'
     replace: "{{ master_internal_ip }}"
     backup: yes
 
-- name: Configure Deployer URI
+- name: Org all Search Base Configure Deployer URI Multi Site
   replace:
     path: "/opt/splunk/etc/apps/org_all_search_base/server.conf.multi_site"
     regexp: '<deployer>'
     replace: "{{ deployer_internal_ip }}"
     backup: yes
 
-- name: Configure Master Port
+- name: Org all Search Base Configure Master Port Multi SIte
   replace:
     path: "/opt/splunk/etc/apps/org_all_search_base/server.conf.multi_site"
     regexp: '<splunkd_port>'
     replace: "{{ splunkd_port }}"
     backup: yes
 
-- name: Edit server cluster config for indexer discovery pass4Symm value
+- name: Org all Search Base Edit server cluster config for indexer discovery pass4Symm value Multi Site
   replace:
     path: "/opt/splunk/etc/apps/org_all_search_base/server.conf.multi_site"
     regexp: '<idxdiscovery_secret>'
     replace: "{{ idxdiscovery_secret }}"
     backup: yes
 
-- name: Edit server cluster config for indxer cluster pass4Symm value
+- name: Org all Search Base Edit server cluster config for indxer cluster pass4Symm value Multi Site
   replace:
     path: "/opt/splunk/etc/apps/org_all_search_base/server.conf.multi_site"
     regexp: '<idxcluster_secret>'
     replace: "{{ idxcluster_secret }}"
     backup: yes
 
-- name: Edit server cluster config for search head cluster pass4Symm value
+- name: Org all Search Base Edit server cluster config for search head cluster pass4Symm value Multi Site
   replace:
     path: "/opt/splunk/etc/apps/org_all_search_base/server.conf.multi_site"
     regexp: '<shcluster_secret>'
     replace: "{{ shcluster_secret }}"
     backup: yes
 
-- name: Configure Server Search Head Cluster Replication Port
+- name: Org all Search Base Configure Server Search Head Cluster Replication Port Mult SIte
   replace:
     path: "/opt/splunk/etc/apps/org_all_search_base/server.conf.multi_site"
     regexp: '<shc_rep_port>'

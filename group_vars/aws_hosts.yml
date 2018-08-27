@@ -1,0 +1,9 @@
+aws_access_key: AKIAJRF2HC4G3VA5SP3A
+aws_secret_key: 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
+key_name: splk-lab
+aws_region: us-west-1
+vpc_id: vpc-9f0c7af8
+ami_id: ami-04b2de92cd3803b8e
+instance_type: t2.micro
+my_local_cidr_ip: 54.183.65.161/32
+

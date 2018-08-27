@@ -1,3 +1,8 @@
+---
+# This playbook will configure Splunk as an Application Deployment Server and place Base Configs into Apps Direcory
+# It relies of having all base configs built already, for information on this,
+# please contact Teku Professional Services @ www.tekugroup.net
+
 - name: Copy base configs
   copy: src={{ deploypackages }}{{ base_configs }} dest=/var/tmp owner=splunk group=splunk mode=0755
 

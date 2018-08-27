@@ -1,5 +1,5 @@
 ---
-# This playbook will configure Splunk as a cluster master.
+# This playbook will configure Splunk as a cluster master and place base configs in apps directory.
 # It relies of having all base configs built already, for information on this,
 # please contact Teku Professional Services @ www.tekugroup.net
 
@@ -44,42 +44,42 @@
 
 # Single Site Configuration
 
-- name: Configure Site Replication Factor
+- name: Org CM Base Configure Site Replication Factor Single Site
   replace:
     path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf"
     regexp: '<replication_factor>'
     replace: "{{ replication_factor }}"
     backup: no
 
-- name: Configure Site Search Factor
+- name: Org CM Base Configure Site Search Factor Single Site
   replace:
     path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf"
     regexp: '<search_factor>'
     replace: "{{ search_factor }}"
     backup: no
 
-- name: Edit server cluster config-indexer discovery secret values
+- name: Org CM Base Edit server cluster config-indexer discovery secret values Single Site
   replace:
     path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf"
     regexp: '<idxdiscovery_secret>'
     replace: "{{ idxdiscovery_secret }}"
     backup: no
 
-- name: Edit server indexer cluster config  secret values
+- name: Org CM Base Edit server indexer cluster config  secret values Single Site
   replace:
     path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf"
     regexp: '<idxcluster_secret>'
     replace: "{{ idxcluster_secret }}"
     backup: no
 
-- name: Edit server search cluster config secret pass4symm value
+- name: Org CM Base Edit server search cluster config secret pass4symm value Single Site
   replace:
     path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf"
     regexp: '<shcluster_secret>'
     replace: "{{ shcluster_secret }}"
     backup: no
 
-- name: Edit server cluster config for cluster label
+- name:  Org CM Base Edit server cluster config for cluster label Single Site
   replace:
     path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf"
     regexp: '<shcluster_label>'
@@ -88,63 +88,63 @@
 
 
 # Multi Site Configuration 
-- name: Configure Site Number
+- name: Org CM Base Configure Site Number Multi SIte
   replace:
     path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf.multi_site"
     regexp: '<master_residence_site>'
     replace: "{{ master_residence_site }}"
     backup: no
 
-- name: Configure MultiSite Status
+- name: Org CM Base Configure MultiSite Status
   replace:
     path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf.multi_site"
     regexp: '<multisite_status>'
     replace: "{{ multisite_status }}"
     backup: no
 
-- name: Configure Available Sites
+- name: Org CM Base Configure Available Sites Multi SIte
   replace:
     path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf.multi_site"
     regexp: '<available_sites>'
     replace: "{{ available_sites }}"
     backup: no
 
-- name: Configure Site Replication Factor
+- name: Org CM Base Configure Site Replication Factor Multi SIte
   replace:
     path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf.multi_site"
     regexp: '<site_replication_factor>'
     replace: "{{ site_replication_factor }}"
     backup: no
 
-- name: Configure Site Search Factor
+- name: Org CM Base Configure Site Search Factor Multi SIte
   replace:
     path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf.multi_site"
     regexp: '<site_search_factor>'
     replace: "{{ site_search_factor }}"
     backup: no
 
-- name: Edit server cluster config-indexer discovery secret values
+- name: Org CM Base edit server cluster config-indexer discovery secret values Multi SIte
   replace:
     path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf.multi_site"
     regexp: '<idxdiscovery_secret>'
     replace: "{{ idxdiscovery_secret }}"
     backup: no
 
-- name: Edit server indexer cluster config  secret values
+- name: Org CM Base Edit server indexer cluster config  secret values Multi SIte
   replace:
     path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf.multi_site"
     regexp: '<idxcluster_secret>'
     replace: "{{ idxcluster_secret }}"
     backup: no
 
-- name: Edit server search cluster config secret pass4symm value
+- name: Org CM Base Edit server search cluster config secret pass4symm value Multi SIte
   replace:
     path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf.multi_site"
     regexp: '<shcluster_secret>'
     replace: "{{ shcluster_secret }}"
     backup: no
 
-- name: Edit server cluster config for cluster label
+- name: Org CM Base Edit server cluster config for cluster label Multi Site
   replace:
     path: "/opt/splunk/etc/apps/org_cm_base/local/server.conf.multi_site"
     regexp: '<shcluster_label>'

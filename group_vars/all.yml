@@ -57,7 +57,6 @@ idxdiscovery_secret: password123
 
 #Multi Site Status?
 multisite_status: true
-#multisite_status: false
 
 #Counts
 site_count: 2
@@ -66,6 +65,8 @@ site_count: 2
 master_count: 1
 licenser_count: 1
 monitor_count: 1
+deployer_count: 1
+deployment_count: 1
 search_peer_count: 2 #Indexer
 search_members: 2 #Search Heads
 forwarder_count: 2 

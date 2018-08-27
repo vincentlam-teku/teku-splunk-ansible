@@ -1,6 +1,14 @@
 ---
-#
+#Single-Site
+#- name: Configure splunk cluster slave
+#  shell: /opt/splunk/bin/splunk edit cluster-config -master_uri https://{{ master_internal_ip }}:{{ splunkd_port }} -mode {{ cluster_mode }} -replication_port {{ idx_rep_port }} -secret {{ idxcluster_secret }} -auth {{ splkuser }}:{{ splkpass }}
+#  become: yes
+#  become_user: splunk
+#  ignore_errors: yes
+#  async: 45
+#  register: config_idxcluster_result 
 
+#Multi-Site 
 - name: Configure splunk cluster slave
   shell: /opt/splunk/bin/splunk edit cluster-config -master_uri https://{{ master_internal_ip }}:{{ splunkd_port }} -mode {{ cluster_mode }} -multisite {{ multisite_status }} -site site{{site_count}} -replication_port {{ idx_rep_port }} -secret {{ idxcluster_secret }} -auth {{ splkuser }}:{{ splkpass }}
   become: yes
