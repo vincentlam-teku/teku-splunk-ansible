@@ -1,0 +1,3 @@
+- name: Delete Splunk User Directory
+  command: sudo rm -rf /home/splunk/
+  ignore_errors: yes

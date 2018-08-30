@@ -4,4 +4,4 @@
   become: yes
 
   roles:
-    - install_itsi_to_searchhead
+    - install_itsi_to_search

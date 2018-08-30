@@ -1,0 +1,5 @@
+- name: Install Splunk Enterprise package
+  unarchive: src=/var/tmp/{{splunk_enterprise}} dest=/opt/ owner=splunk group=splunk creates=yes
+  become: yes
+  become_user: splunk
+  when: splunk_path.stat.exists == false

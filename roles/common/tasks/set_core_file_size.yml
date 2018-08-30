@@ -1,0 +1,3 @@
+name: Set core file size
+  copy: src=20-core.conf dest=/etc/security/limits.d/ owner=root group=root mode=0755
+  tags: best_practice

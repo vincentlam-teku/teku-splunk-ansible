@@ -1,0 +1,8 @@
+#Add License to License Master 
+
+- name: Add Licenese to License Master
+  command: /opt/splunk/bin/splunk add licenses /opt/splunk/licenses/splunk.lic -auth {{ splkuser }}:{{ splkpass }}
+  become: yes
+  become_user: splunk
+  register: add_license_to_license_master
+

@@ -1,0 +1,8 @@
+# Basic creation example:
+- name: Set up Kinesis Stream with 10 shards and wait for the stream to become ACTIVE
+  kinesis_stream:
+    name: test-stream
+    shards: 10
+    wait: yes
+    wait_timeout: 600
+  register: test_stream

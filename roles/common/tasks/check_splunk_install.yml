@@ -1,0 +1,9 @@
+name: checking if splunk is install
+  tags: install
+  stat: path=/opt/splunk
+  register: splunk_path
+
+- name: is splunk installed?
+  tags: install
+  debug: msg='splunk is already installed under /opt/splunk'
+  when: splunk_path.stat.exists

@@ -1,0 +1,17 @@
+- name: Edit outputs base config master value
+  replace:
+    path: "/var/tmp/base_configs/org_all_core_outputs/local/outputs.conf"
+    regexp: '<master>'
+    replace: "{{ master_internal_ip }}"
+    backup: yes
+
+- name: Edit outputs base config secret value
+  replace:
+    path: "/var/tmp/base_configs/org_all_core_outputs/local/outputs.conf"
+    regexp: '<idxdiscovery_secret>'
+    replace: "{{ idxdiscovery_secret }}"
+    backup: yes
+
+- name: Copy base configs to app path
+  shell: cp -a "/var/tmp/base_configs/org_all_core_outputs" /opt/splunk/etc/apps/
+

@@ -1,0 +1,5 @@
+- name: accept license, complete install and first start splunk
+  shell: /opt/splunk/bin/splunk start --accept-license --answer-yes --no-prompt
+  become: yes
+  become_user: splunk
+  register: first_start_splunk_result

@@ -32,12 +32,12 @@
 
 - name: make /opt writetable by splunk
   tags:
-   - install
+   - ansible
   file: path=/opt mode=777
 
 - name: Create /home/splunk/.splunk for storing temporary
   tags:
-   - neccessary
+   - ansible
   file: 
    path: /home/splunk/.splunk
    owner: splunk

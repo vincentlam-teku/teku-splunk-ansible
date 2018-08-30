@@ -119,3 +119,7 @@ cluster_mode=searchhead
 [forwarders:children]
 forwarder_uni
 forwarder_heavy
+
+[aws_add_on:children]
+search
+forwarder_heavy

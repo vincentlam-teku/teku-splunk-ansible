@@ -1,0 +1,8 @@
+#config boot-start with splunk user
+
+- name: Configure boot-start with Splunk user
+  shell: /opt/splunk/bin/splunk enable boot-start -user splunk --accept-license --answer-yes --no-prompt
+  async: 45
+  become: yes
+  become_user: splunk
+  register: config_boot_start_result

@@ -17,16 +17,17 @@
         - proto: all
           cidr_ip: "{{my_local_cidr_ip}}"
         - proto: all
-          group_name: ansible
+          group_name: 
       rules_egress:
         - proto: all
           cidr_ip: 0.0.0.0/0
     register: firewall
+
   - name: Create an EC2 instance
     ec2:
       aws_access_key: "{{aws_access_key}}"
       aws_secret_key: "{{aws_secret_key}}"
-      key_name: "{{key_name}}"
+      key_name: "{{aws_key_name}}"
       region: "{{aws_region}}"
       group_id: "{{firewall.group_id}}"
       instance_type: "{{instance_type}}"
@@ -34,12 +35,12 @@
       wait: yes
       volumes:
         - device_name: /dev/sda1
-          volume_type: gp2
-          volume_size: 100
-          delete_on_termination: true
-      exact_count: 5
+          volume_type: "{{aws_ec2_volume_size}}"
+          volume_size: "{{aws_ec2_volume_size}}"
+          delete_on_termination: 
+      exact_count: "{{aws_ec2_instance_count}}"
       count_tag:
-         Name: aws-demo
+         Name: "{{aws_count_tag}}"
       instance_tags:
-         Name: aws-demo
-    register: ec2
+         Name: "{{aws_instance_tag}}"
+    register: ec2_instance_created

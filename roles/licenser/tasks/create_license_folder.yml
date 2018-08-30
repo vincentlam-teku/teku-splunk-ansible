@@ -1,0 +1,7 @@
+- name: Create license folder
+  file:
+   path: /opt/splunk/licenses
+   owner: splunk
+   group: splunk
+   mode: 0755
+   recurse: yes

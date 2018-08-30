@@ -1,0 +1,7 @@
+#Add SearchHead to Multi-Site Index Cluster
+- name: Configure splunk search head to join index cluster
+  shell: /opt/splunk/bin/splunk edit cluster-config -master_uri https://{{ master_internal_ip }}:{{ splunkd_port }} -mode {{ cluster_mode }} -site site{{site_coun$
+  become: yes
+  become_user: splunk
+  ignore_errors: yes
+  register: add_sh_to_idxcluster_result

@@ -1,0 +1,11 @@
+- name: Install Splunk Enterprise AWS Addon
+  unarchive: src=/var/tmp/{{splunk_aws_addon}} dest=/var/tmp/ owner=splunk group=splunk creates=yes
+  become: yes
+  become_user: splunk
+
+- name: Copy splunk_app_for_aws to opt/splunk/etc/apps
+  shell: cp -a /var/tmp/splunk_aws_addon/opt/splunk/etc/apps/
+  become: yes
+  become_user: splunk
+
+

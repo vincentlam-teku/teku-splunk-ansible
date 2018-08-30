@@ -24,4 +24,3 @@
   command: /opt/splunk/bin/splunk restart --answer-yes
   become: yes
   become_user: splunk
-  when: add_license_to_license_master is succeeded

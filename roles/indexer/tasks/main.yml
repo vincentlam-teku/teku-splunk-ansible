@@ -4,10 +4,10 @@
 # please contact Teku Professional Services @ www.tekugroup.net
 
 - name: Copy base configs
-  copy: src={{ deploypackages }}{{ base_configs }} dest=/var/tmp owner=splunk group=splunk mode=0755
-
+  copy: src={{ deploypackages }}{{ base_configs }} dest=/var/tmp/ owner=splunk group=splunk mode=0755 
+  
 - name: Copy base configs to app path
-  copy: src=/var/tmp/base_configs/org_all_indexer_base dest=/opt/splunk/etc/apps owner=splunk group=splunk mode=0755
+  shell: cp -a "/var/tmp/base_configs/org_all_indexer_base" /opt/splunk/etc/apps/
 
 #Copy Conf Files for Single Site and Multi Site
 

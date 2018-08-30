@@ -1,0 +1,4 @@
+# Kill Splunkd Process
+- name: Kill running splunkd processes
+  shell: pkill splunkd
+  ignore_errors: yes

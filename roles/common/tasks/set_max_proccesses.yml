@@ -1,0 +1,3 @@
+name: Set max processes limit
+  copy: src=20-nproc.conf dest=/etc/security/limits.d/ owner=root group=root mode=0755
+  tags: best_practice

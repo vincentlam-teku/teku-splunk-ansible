@@ -61,14 +61,21 @@
 
 # Configure Search Head Cluster 
 
-- hosts: search
+- hosts: licenser
 
   roles:
-   - config_search_cluster
+   - install_itsi_to_licenser
+
+# Install ITSI on Indexer
+
+- hosts: indexer
+
+  roles:
+   - install_itsi_to_index
 
 # Install ITSI on Search Head
 
 - hosts: search
 
   roles:
-   - install_itsi_to_searchhead
+   - install_itsi_to_search

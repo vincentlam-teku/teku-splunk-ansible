@@ -1,0 +1,6 @@
+# Copy User Seed.Conf into splunk home /etc/system/local
+- name: Copy User-Seed
+  copy: src=user-seed.conf dest=/opt/splunk/etc/system/local/ owner=splunk group=splunk mode=0755
+  become: yes
+  become_user: splunk
+  register: user-seed-copied

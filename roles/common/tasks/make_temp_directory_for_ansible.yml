@@ -1,0 +1,9 @@
+- name: Create /home/splunk/.splunk for storing temporary files during ansible deployment
+  tags:
+   - neccessary
+  file:
+   path: /home/splunk/.splunk
+   owner: splunk
+   group: splunk
+   mode: 0755
+   recurse: yes

@@ -1,0 +1,5 @@
+#Set open file limits for Host
+
+- name: Set open files limit for splunk
+  copy: src=20-nofile.conf dest=/etc/security/limits.d/ owner=root group=root mode=0755
+  tags: best_practice

@@ -1,0 +1,9 @@
+- name: Install Splunk Enterprise Addon for Unix and Linux
+  unarchive: src=/var/tmp/{{splunk_nix_addon}} dest=/var/tmp/ owner=splunk group=splunk creates=yes
+  become: yes
+  become_user: splunk
+
+- name: Copy splunk_app_for_nix to opt/splunk/etc/apps
+  shell: cp -a /var/tmp/splunk_app_for_nix /opt/splunk/etc/apps/
+  become: yes
+  become_user: splunk

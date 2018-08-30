@@ -1,0 +1,11 @@
+#Check for Splunk Installation Binary
+
+- name: checking if splunk install binary is present
+  tags: install
+  stat: path=/var/tmp/{{splunk_enterprise}}
+  register: splunk_install_binary
+
+- name: is splunk install binary present
+  tags: install
+  debug: msg='splunk install binary is present no need to download'
+  when: splunk_install_binary.stat.exists

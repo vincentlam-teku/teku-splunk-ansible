@@ -1,0 +1,46 @@
+# Example Configs for Single Site Search Head Cluster
+
+- name: Push Examlple Conf Files Splunk Server to join Index Cluster and be a Search Head Cluster Member by Copying server.conf single site
+  copy: src=server.conf dest=/opt/splunk/etc/apps/org_all_search_base/server.conf owner=splunk group=splunk mode=0755
+
+- name: Org all Search Base Configure Master URI Single Site
+  replace:
+    path: "/opt/splunk/etc/apps/org_all_search_base/server.conf"
+    regexp: '<master>'
+    replace: "{{ master_internal_ip }}"
+    backup: yes
+
+- name: Org all Search Base Configure Deployer URI Single Site
+  replace:
+    path: "/opt/splunk/etc/apps/org_all_search_base/server.conf"
+    regexp: '<deployer>'
+    replace: "{{ deployer_internal_ip }}"
+    backup: yes
+
+- name: Org all Search Base Configure Master Port Single Site
+  replace:
+    path: "/opt/splunk/etc/apps/org_all_search_base/server.conf"
+    regexp: '<splunkd_port>'
+    replace: "{{ splunkd_port }}"
+    backup: yes
+
+- name: Org all Search Base Edit server cluster config for indexer discovery pass4Symm value Single Site
+  replace:
+    path: "/opt/splunk/etc/apps/org_all_search_base/server.conf"
+    regexp: '<idxdiscovery_secret>'
+    replace: "{{ idxdiscovery_secret }}"
+    backup: yes
+
+- name: Org all Search Base Edit server cluster config for indxer cluster pass4Symm value Single site
+  replace:
+    path: "/opt/splunk/etc/apps/org_all_search_base/server.conf"
+    regexp: '<idxcluster_secret>'
+    replace: "{{ idxcluster_secret }}"
+    backup: yes
+
+- name: Org all Search Base Edit server cluster config for search head cluster pass4Symm value Single site
+  replace:
+    path: "/opt/splunk/etc/apps/org_all_search_base/server.conf"
+    regexp: '<shcluster_secret>'
+    replace: "{{ shcluster_secret }}"
+    backup: yes

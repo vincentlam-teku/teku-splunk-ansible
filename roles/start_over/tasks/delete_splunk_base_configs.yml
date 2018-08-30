@@ -1,0 +1,4 @@
+# Delete Splunk Base Configs
+- name: Delete Splunk Base Config Files
+  command: sudo rm -rf /var/tmp/base_configs
+  ignore_errors: yes

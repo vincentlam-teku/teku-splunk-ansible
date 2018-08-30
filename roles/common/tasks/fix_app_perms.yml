@@ -1,0 +1,2 @@
+- name: Fix 'app' permissions
+  file: path=/opt/splunk/etc/apps owner=splunk group=splunk mode=0755 state=directory recurse=yes

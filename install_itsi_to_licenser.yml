@@ -1,0 +1,7 @@
+- name: Install ITSI on Licenser
+  hosts: licenser
+  remote_user: centos
+  become: yes
+
+  roles:
+    - install_itsi_to_licenser

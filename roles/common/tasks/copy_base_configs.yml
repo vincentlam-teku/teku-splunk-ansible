@@ -1,0 +1,4 @@
+#Copy Base Confgis to /var/tmp/ 
+- name: Copy base configs
+  copy: src={{ deploypackages }}{{ base_configs }} dest=/var/tmp/ owner=splunk group=splunk mode=0755
+  register: base_configs_copied

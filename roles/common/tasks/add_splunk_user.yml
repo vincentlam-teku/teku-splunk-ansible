@@ -1,0 +1,4 @@
+- name: Add Splunk Service User
+  user: name=splunk comment="Splunk Service User" shell=/usr/sbin/nologin groups=splunk createhome=no
+
+

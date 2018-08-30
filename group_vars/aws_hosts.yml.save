@@ -1,0 +1,20 @@
+aws_access_key: AKIAIRICCQ67HIO6XZPQ
+aws_secret_key: 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
+key_name: splk-lab
+
+
+aws_regAion: us-west-1
+
+#VPC ID
+vpc_id: vpc-9f0c7af8
+
+#AWS AMI ID
+ami_id: ami-04b2de92cd3803b8e
+
+#AWS Instance Sizes
+#
+instance_type: t2.micro
+
+
+#Ansible Controler Node Public IP Address and Subnet
+my_local_cidr_ip: 54.183.65.161/32

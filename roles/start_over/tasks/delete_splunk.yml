@@ -1,0 +1,3 @@
+- name: Delete Splunk Files
+  command: sudo rm -rf /opt/splunk
+  ignore_errors: yes

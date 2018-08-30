@@ -1,0 +1,8 @@
+#Single-Site
+- name: Configure splunk cluster master
+  shell: /opt/splunk/bin/splunk edit cluster-config -mode {{ cluster_mode }} -replication_factor$
+  become: yes
+  become_user: splunk
+  ignore_errors: yes
+  async: 45
+  register: config_cluster_master_result

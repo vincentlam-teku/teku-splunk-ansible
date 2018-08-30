@@ -1,0 +1,4 @@
+- name: make /opt writetable by splunk
+  tags:
+   - install
+  file: path=/opt mode=777

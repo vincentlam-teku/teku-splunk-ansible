@@ -1,0 +1,32 @@
+#Writes an example multi site server.conf under org_all_indexer_base
+
+- name: Configure Splunk Search Peer for Multi Site
+  copy: src=server.conf.multi_site dest=/opt/splunk/etc/apps/org_all_indexer_base/server.conf.multi_site owner=splunk group=splunk mode=0755
+  
+- name: Write for org all indexer base Configure Master URI Multi SIte
+  replace:
+    path: "/opt/splunk/etc/apps/org_all_indexer_base/server.conf.multi_site"
+    regexp: '<master>'
+    replace: "{{ master_internal_ip }}"
+    backup: yes
+
+- name: Write for org all indexer base Configure Master Port Multi SIte
+  replace:
+    path: "/opt/splunk/etc/apps/org_all_indexer_base/server.conf.multi_site"
+    regexp: '<splunkd_port>'
+    replace: "{{ splunkd_port }}"
+    backup: yes
+
+- name: Write for org all indexer base  server cluster config for index cluster pass4Symm value multi-site
+  replace:
+    path: "/opt/splunk/etc/apps/org_all_indexer_base/server.conf.multi_site"
+    regexp: '<idxcluster_secret>'
+    replace: "{{ idxcluster_secret }}"
+    backup: yes
+
+- name: Write for org all indexer base Server Configure Replication Port Multi Site
+  replace:
+    path: "/opt/splunk/etc/apps/org_all_indexer_base/server.conf.multi_site"
+    regexp: '<idx_rep_port>'
+    replace: "{{ idx_rep_port }}"
+    backup: yes

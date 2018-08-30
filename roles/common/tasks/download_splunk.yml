@@ -1,0 +1,3 @@
+- name: Download Splunk
+  get_url: url={{ wget_url_splunk_enterprise }} dest=/var/tmp/ owner=root group=root mode=0755
+  when: splunk_install_binary.stat.exists == false

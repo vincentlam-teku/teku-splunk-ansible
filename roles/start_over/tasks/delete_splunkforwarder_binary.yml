@@ -1,0 +1,4 @@
+
+- name: Delete Splunk Forwader Installation Binary
+  command: sudo rm -rf /var/tmp/{{splunk_forwarder}}
+  ignore_errors: yes

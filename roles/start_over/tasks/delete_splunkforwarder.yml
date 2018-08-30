@@ -1,0 +1,4 @@
+#Delete Splunk Forwarder
+- name: Delete Splunk Forwarder Files
+  command: sudo rm -rf /opt/splunkforwarder
+  ignore_errors: yes

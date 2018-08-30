@@ -1,0 +1,49 @@
+#Writes an example single site server.conf under org_all_indexer_base 
+
+- name: Configure Splunk Search Peer for Single Site
+  copy: src=server.conf dest=/opt/splunk/etc/apps/org_all_indexer_base/server.conf owner=splunk group=splunk mode=0755
+  register: copy_example_server_conf_to_org_all_indexer_base
+
+# Write Configurations for Single Site Server Config File
+
+- name: Configure Master URI for org all indexer base single site
+  replace:
+    path: "/opt/splunk/etc/apps/org_all_indexer_base/server.conf"
+    regexp: '<master>'
+    replace: "{{ master_internal_ip }}"
+    backup: yes
+
+- name: Configure Master Port for org all indexer base single site
+  replace:
+    path: "/opt/splunk/etc/apps/org_all_indexer_base/server.conf"
+    regexp: '<splunkd_port>'
+    replace: "{{ splunkd_port }}"
+    backup: yes
+
+- name: Write org all indexer base Edit server cluster config for index cluster pass4Symm value
+  replace:
+    path: "/opt/splunk/etc/apps/org_all_indexer_base/server.conf"
+    regexp: '<idxcluster_secret>'
+    replace: "{{ idxcluster_secret }}"
+    backup: yes
+
+- name: Configure Master Port for org all indexer base single site
+  replace:
+    path: "/opt/splunk/etc/apps/org_all_indexer_base/server.conf"
+    regexp: '<splunkd_port>'
+    replace: "{{ splunkd_port }}"
+    backup: yes
+
+- name: Write org all indexer base Edit server cluster config for index cluster pass4Symm value
+  replace:
+    path: "/opt/splunk/etc/apps/org_all_indexer_base/server.conf"
+    regexp: '<idxcluster_secret>'
+    replace: "{{ idxcluster_secret }}"
+    backup: yes
+
+- name: Write Org all Indexer Base Configure Replication Port Single Site
+  replace:
+    path: "/opt/splunk/etc/apps/org_all_indexer_base/server.conf"
+    regexp: '<idx_rep_port>'
+    replace: "{{ idx_rep_port }}"
+    backup: yes

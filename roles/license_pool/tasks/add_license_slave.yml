@@ -1,0 +1,4 @@
+- name: Point Host to License Master and Join License Pool as a License Slave
+  command: /opt/splunk/bin/splunk edit licenser-localslave -master_uri https://{{ licenser_internal_ip }}:{{ splunkd_port }} -auth {{splkuser}}:{{splkpass}}
+  become: yes
+  become_user: splunk

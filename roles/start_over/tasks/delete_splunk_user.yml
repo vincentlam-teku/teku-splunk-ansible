@@ -1,0 +1,3 @@
+- name: Delete Splunk User
+  command: sudo userdel -f splunk
+  ignore_errors: yes

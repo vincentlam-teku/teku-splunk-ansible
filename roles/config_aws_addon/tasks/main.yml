@@ -1,0 +1,29 @@
+#TODO
+
+#$SPLUNK_HOME/etc/apps/Splunk_TA_aws/local/inputs.conf Edits 
+
+#AWS Config
+
+#S3 Access Logs
+#Generic
+#Incremental
+#SQS Based S3
+
+#CloudTrail
+
+#Billing
+
+
+#OTHER Inputs
+
+#AWS Config Rules
+#$SPLUNK_HOME/etc/apps/Splunk_TA_aws/local/aws_config_rule_tasks.conf
+
+#AWS Inspector
+#$SPLUNK_HOME/etc/apps/Splunk_TA_aws/local/aws_inspector_tasks.conf
+
+#VPCFlowLogs
+#$SPLUNK_HOME/etc/apps/Splunk_TA_aws/local/aws_kinesis_tasks.conf 
+
+#ELB Access
+#$SPLUNK_HOME/etc/apps/Splunk_TA_aws/local/aws_sqs_tasks.conf

@@ -1,0 +1,3 @@
+- name: Copy base configs to app path
+  shell: cp -a "/var/tmp/base_configs/org_all_indexer_base" /opt/splunk/etc/apps/
+  register: copy_org_all_indexer_base

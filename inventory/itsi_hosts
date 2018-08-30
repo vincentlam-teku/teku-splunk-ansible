@@ -4,7 +4,8 @@
 # servers that are meant to be cluster masters, will also have the common config applied.
 #
 [master]
-172.31.1.84
+#127.0.0.1
+172.31.4.64
 
 [master:vars]
 cluster_mode=master
@@ -13,15 +14,21 @@ cluster_mode=master
 #
 [licenser]
 #127.0.0.1
-172.31.1.84
+172.31.4.64
+
+# servers that are meant to be deployer, will also have the common config applied.
+#
+[deployer]
+#127.0.0.1
+172.31.4.64
 
 # servers that are meant to be indexers, will also have the common config applied.
 #
 [indexer]
 #127.0.0.1
-172.31.1.76
-172.31.3.118
-172.31.4.194
+172.31.8.81
+172.31.14.67
+172.31.11.208
 
 [indexer:vars]
 cluster_mode=slave
@@ -30,7 +37,7 @@ cluster_mode=slave
 #
 [search]
 #127.0.0.1
-172.31.2.71
+172.31.0.15
 
 [search:vars]
 cluster_mode=searchhead

@@ -1,0 +1,10 @@
+# Create a bucket, add a policy from a file, enable requester pays, enable versioning and tag
+- s3_bucket:
+    name: mys3bucket
+    policy: "{{ lookup('file','policy.json') }}"
+    requester_pays: yes
+    versioning: yes
+    tags:
+      example: tag1
+      another: tag2
+

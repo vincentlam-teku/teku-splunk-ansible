@@ -1,0 +1,5 @@
+- name: Start Splunk
+  shell: /opt/splunk/bin/splunk start --answer-yes
+  become: yes
+  become_user: splunk
+  register: splunk_start_result

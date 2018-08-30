@@ -1,0 +1,5 @@
+#Kill Running MongoDB Processes
+
+- name: Kill running mongo db processes
+  shell: pkill mongod
+  ignore_errors: yes

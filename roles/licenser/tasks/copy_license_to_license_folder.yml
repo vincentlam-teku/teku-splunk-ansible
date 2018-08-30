@@ -1,0 +1,5 @@
+- name: Copy license to License folder
+  copy: src=splunk.lic dest=/opt/splunk/licenses/ owner=splunk group=splunk mode=0755
+  become: yes
+  become_user: splunk
+  register: copy_license_to_license_folder

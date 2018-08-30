@@ -45,7 +45,7 @@
   debug: msg='splunk forwarder install binary is present no need to download'
   when: splunk_forwarder_install_binary.stat.exists
 
-- name: Download Splunk
+- name: Download Splunk Forwarder
   get_url: url={{ wget_url_splunk_forwarder}} dest=/var/tmp/ owner=root group=root mode=0755
   when: splunk_forwarder_install_binary.stat.exists == false
 
@@ -55,7 +55,7 @@
   become_user: splunk
   when: splunk_forwarder_install_binary.stat.exists
 
-- name: Copy User-Seed
+- name: Copy User-Seed to SplunkForwarder etc directory
   copy: src=user-seed.conf dest=/opt/splunkforwarder/etc/system/local/ owner=splunk group=splunk mode=0755
   become: yes
   become_user: splunk
@@ -84,7 +84,7 @@
    - install
   file: path=/etc/init.d/splunk mode=755
  
-- name: ReStart Splunk
+- name: Restart Splunk
   shell: /opt/splunkforwarder/bin/splunk restart
   become: yes
   become_user: splunk

@@ -1,0 +1,7 @@
+#Enable Flow Log in VPC
+
+#CloudWatch Log Group
+
+#Kinesis Subscription
+
+#Splunk Addon Kinesis Input

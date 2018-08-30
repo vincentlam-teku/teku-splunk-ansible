@@ -1,0 +1,11 @@
+#Disable Transparent Huge Pages 
+
+- name: Copy Disable THP File
+  copy: src=disable-thp dest=/etc/init.d/ owner=root group=root mode=0755
+  tags: best_practice
+  register: disable-thp-file-set
+
+- name: Disable Transparent Huge Page
+  shell: sudo chkconfig --add disable-thp
+  tags: best_practice
+  register: disable-thp-chkconfig

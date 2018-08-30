@@ -1,0 +1,3 @@
+- name: Delete Splunk Installation Binary
+  command: sudo rm -rf /var/tmp/{{splunk_enterprise}}
+  ignore_errors: yes

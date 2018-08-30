@@ -1,0 +1,4 @@
+- name: add splunk group
+  tags:
+   - install
+  group: name=splunk state=present
